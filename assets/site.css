@@ -588,7 +588,11 @@ a.ent:hover { background: var(--jade-tint); box-shadow: none; }
 .letters { display: flex; flex-wrap: wrap; gap: .15rem; margin: .75rem 0 .25rem; }
 .letters a { min-width: 1.9rem; padding: .15rem .3rem; border: 1px solid var(--line); border-radius: 3px; text-align: center; font-weight: 650; text-decoration: none; }
 .letters a:hover { border-color: var(--jade); background: var(--jade-tint); }
-.letters + div > [data-group] > .sub { margin-top: .5rem; }
+.letters a[aria-current] { border-color: var(--jade); background: var(--jade); color: var(--surface); }
+.letters + div > [data-group] > .sub { margin-top: .75rem; }
+/* a folded letter group is not shown at all: the bar is the way in */
+.letters + div > [data-group] > .sub.is-closed { display: none; }
+.letters + div:not(.is-filtered) > [data-group] > .sub > .fold-h::after { display: none; }
 
 /* trainers: one row per trainer, details unfold */
 .trs { margin: .5rem 0 1rem; border-top: 1px solid var(--line); }

@@ -386,6 +386,7 @@
       /* groups that start folded open while a filter is set, and fold again without one */
       if (filtered !== target.classList.contains("is-filtered")) {
         target.classList.toggle("is-filtered", filtered);
+        $$(".letters a[aria-current]").forEach(function (a) { a.removeAttribute("aria-current"); });
         $$(".start-closed", target).forEach(function (g) {
           g.classList.toggle("is-closed", !filtered);
           var h = g.firstElementChild;
@@ -494,6 +495,27 @@
     });
     set(!box.classList.contains("start-closed") || !!(box.closest && box.closest(".is-filtered")));
     return { box: box, set: set, main: h.tagName === "H2" };
+  });
+  /* ---- letter bar: one letter group at a time, shown below the bar ---- */
+  $$(".letters").forEach(function (bar) {
+    var wrap = bar.nextElementSibling, links = $$("a", bar);
+    if (!wrap) return;
+    function show(id) {
+      folds.forEach(function (f) {
+        if (wrap.contains(f.box) && f.box.classList.contains("start-closed")) f.set(f.box.id === id);
+      });
+      links.forEach(function (a) {
+        if (id && a.getAttribute("href") === "#" + id) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+    }
+    links.forEach(function (a) {
+      a.setAttribute("role", "button");
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        show(a.hasAttribute("aria-current") ? null : a.getAttribute("href").slice(1));
+      });
+    });
   });
   var allBtn = null;
   function syncAll() {
