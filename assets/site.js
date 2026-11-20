@@ -483,7 +483,7 @@
     h.addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
     });
-    set(true);
+    set(!box.classList.contains("start-closed"));
     return { box: box, set: set, main: h.tagName === "H2" };
   });
   var allBtn = null;
