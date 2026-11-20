@@ -392,6 +392,7 @@
           var h = g.firstElementChild;
           if (h) h.setAttribute("aria-expanded", filtered ? "true" : "false");
         });
+        try { target.dispatchEvent(new CustomEvent("oj-filter", { detail: filtered })); } catch (e) { /* old browsers */ }
       }
       if (count) count.textContent = fmt(T.filter_count, { shown: shown, total: items.length });
       if (reset) reset.hidden = !filtered;
@@ -516,6 +517,10 @@
         show(a.hasAttribute("aria-current") ? null : a.getAttribute("href").slice(1));
       });
     });
+    /* the first letter is open from the start, and again when a filter is cleared */
+    function first() { if (links.length) show(links[0].getAttribute("href").slice(1)); }
+    if (!wrap.classList.contains("is-filtered")) first();
+    wrap.addEventListener("oj-filter", function (e) { if (!e.detail) first(); });
   });
   var allBtn = null;
   function syncAll() {
