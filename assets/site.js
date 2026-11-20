@@ -7,7 +7,7 @@
   var lang = html.getAttribute("data-lang") || "de";
   var root = html.getAttribute("data-root") || "";
   var assets = root + "../assets/";
-  var T = ({"de":{"close":"Schließen","filter_count":"{shown} von {total}","filter_none":"Kein Eintrag passt zu diesem Filter.","kind_ability":"Fähigkeiten","kind_item":"Items","kind_location":"Orte","kind_move":"Attacken","kind_page":"Seiten","kind_species":"Pokémon","kind_trainer":"Trainer","menu":"Menü","menu_close":"Menü schließen","search":"Suche","search_failed":"Der Suchindex konnte nicht geladen werden.","search_hint":"Tippe, um alles zu durchsuchen.","search_keys_close":"schließen","search_keys_move":"wählen","search_keys_open":"öffnen","search_loading":"Suchindex wird geladen …","search_more":"+ {n} weitere – Suche verfeinern","search_none":"Nichts gefunden für „{q}“.","search_placeholder":"Pokémon, Attacken, Items, Orte …","search_results":"Suchergebnisse"},"en":{"close":"Close","filter_count":"{shown} of {total}","filter_none":"Nothing matches this filter.","kind_ability":"Abilities","kind_item":"Items","kind_location":"Places","kind_move":"Moves","kind_page":"Pages","kind_species":"Pokémon","kind_trainer":"Trainers","menu":"Menu","menu_close":"Close menu","search":"Search","search_failed":"The search index could not be loaded.","search_hint":"Type to search everything.","search_keys_close":"close","search_keys_move":"select","search_keys_open":"open","search_loading":"Loading the search index …","search_more":"+ {n} more – refine your search","search_none":"Nothing found for “{q}”.","search_placeholder":"Pokémon, moves, items, places …","search_results":"Search results"}})[lang] || {};
+  var T = ({"de":{"close":"Schließen","filter_count":"{shown} von {total}","filter_none":"Kein Eintrag passt zu diesem Filter.","fold_all":"Alles einklappen","kind_ability":"Fähigkeiten","kind_item":"Items","kind_location":"Orte","kind_move":"Attacken","kind_page":"Seiten","kind_species":"Pokémon","kind_trainer":"Trainer","menu":"Menü","menu_close":"Menü schließen","search":"Suche","search_failed":"Der Suchindex konnte nicht geladen werden.","search_hint":"Tippe, um alles zu durchsuchen.","search_keys_close":"schließen","search_keys_move":"wählen","search_keys_open":"öffnen","search_loading":"Suchindex wird geladen …","search_more":"+ {n} weitere – Suche verfeinern","search_none":"Nichts gefunden für „{q}“.","search_placeholder":"Pokémon, Attacken, Items, Orte …","search_results":"Suchergebnisse","unfold_all":"Alles ausklappen"},"en":{"close":"Close","filter_count":"{shown} of {total}","filter_none":"Nothing matches this filter.","fold_all":"Collapse all","kind_ability":"Abilities","kind_item":"Items","kind_location":"Places","kind_move":"Moves","kind_page":"Pages","kind_species":"Pokémon","kind_trainer":"Trainers","menu":"Menu","menu_close":"Close menu","search":"Search","search_failed":"The search index could not be loaded.","search_hint":"Type to search everything.","search_keys_close":"close","search_keys_move":"select","search_keys_open":"open","search_loading":"Loading the search index …","search_more":"+ {n} more – refine your search","search_none":"Nothing found for “{q}”.","search_placeholder":"Pokémon, moves, items, places …","search_results":"Search results","unfold_all":"Expand all"}})[lang] || {};
 
   function $(sel, el) { return (el || doc).querySelector(sel); }
   function $$(sel, el) { return Array.prototype.slice.call((el || doc).querySelectorAll(sel)); }
@@ -468,6 +468,43 @@
     show(0, false);
     return { panels: panels, show: show };
   }).filter(Boolean);
+  /* ---- sections fold: click a heading to hide or show its section ---- */
+  var folds = $$("body:not(.home) .page-body .sec > h2, body:not(.home) .page-body .sub > h3").map(function (h) {
+    var box = h.parentNode;
+    h.setAttribute("role", "button");
+    h.tabIndex = 0;
+    h.classList.add("fold-h");
+    function set(open) {
+      box.classList.toggle("is-closed", !open);
+      h.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    function toggle() { set(box.classList.contains("is-closed")); syncAll(); }
+    h.addEventListener("click", function (e) { if (!e.target.closest("a")) toggle(); });
+    h.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+    });
+    set(true);
+    return { box: box, set: set, main: h.tagName === "H2" };
+  });
+  var allBtn = null;
+  function syncAll() {
+    if (!allBtn) return;
+    var anyOpen = folds.some(function (f) { return f.main && !f.box.classList.contains("is-closed"); });
+    allBtn.textContent = anyOpen ? T.fold_all : T.unfold_all;
+    allBtn.setAttribute("data-open", anyOpen ? "1" : "0");
+  }
+  if (folds.filter(function (f) { return f.main; }).length > 1) {
+    var body = $(".page-body");
+    allBtn = el("button", "fold-all");
+    allBtn.type = "button";
+    allBtn.addEventListener("click", function () {
+      var close = allBtn.getAttribute("data-open") === "1";
+      folds.forEach(function (f) { if (f.main) f.set(!close); });
+      syncAll();
+    });
+    body.insertBefore(allBtn, body.firstChild);
+    syncAll();
+  }
   function openHash() {
     var id = decodeURIComponent(location.hash.slice(1));
     if (!id) return;
@@ -476,9 +513,13 @@
     tabsets.forEach(function (s) {
       s.panels.forEach(function (p, i) { if (p === t || p.contains(t)) s.show(i, false); });
     });
+    folds.forEach(function (f) { if (f.box === t || f.box.contains(t)) f.set(true); });
+    for (var d = t; d && d !== doc.body; d = d.parentNode) if (d.tagName === "DETAILS") d.open = true;
+    syncAll();
     if (t.scrollIntoView) t.scrollIntoView();
   }
-  if (tabsets.length) { openHash(); window.addEventListener("hashchange", openHash); }
+  openHash();
+  window.addEventListener("hashchange", openHash);
 
   /* ---- outline: mark the section in view ---- */
   var outline = $(".outline");
