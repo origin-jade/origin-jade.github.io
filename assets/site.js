@@ -383,6 +383,15 @@
         g.hidden = !$("[data-text]:not([hidden])", g);
       });
       var filtered = toks.length > 0 || keys.length > 0;
+      /* groups that start folded open while a filter is set, and fold again without one */
+      if (filtered !== target.classList.contains("is-filtered")) {
+        target.classList.toggle("is-filtered", filtered);
+        $$(".start-closed", target).forEach(function (g) {
+          g.classList.toggle("is-closed", !filtered);
+          var h = g.firstElementChild;
+          if (h) h.setAttribute("aria-expanded", filtered ? "true" : "false");
+        });
+      }
       if (count) count.textContent = fmt(T.filter_count, { shown: shown, total: items.length });
       if (reset) reset.hidden = !filtered;
       none.hidden = shown > 0;
@@ -483,7 +492,7 @@
     h.addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
     });
-    set(!box.classList.contains("start-closed"));
+    set(!box.classList.contains("start-closed") || !!(box.closest && box.closest(".is-filtered")));
     return { box: box, set: set, main: h.tagName === "H2" };
   });
   var allBtn = null;

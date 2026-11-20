@@ -585,6 +585,11 @@ a.ent:hover { background: var(--jade-tint); box-shadow: none; }
 .jcard:has(h3 a):hover { box-shadow: none; }
 .tm { background: none; padding: .25rem 0; }
 
+.letters { display: flex; flex-wrap: wrap; gap: .15rem; margin: .75rem 0 .25rem; }
+.letters a { min-width: 1.9rem; padding: .15rem .3rem; border: 1px solid var(--line); border-radius: 3px; text-align: center; font-weight: 650; text-decoration: none; }
+.letters a:hover { border-color: var(--jade); background: var(--jade-tint); }
+.letters + div > [data-group] > .sub { margin-top: .5rem; }
+
 /* trainers: one row per trainer, details unfold */
 .trs { margin: .5rem 0 1rem; border-top: 1px solid var(--line); }
 .tr { border-bottom: 1px solid var(--line); }
