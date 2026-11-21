@@ -133,6 +133,7 @@ STRINGS = {
         # ---- trainers
         "lead_trainers": "Alle {n} Trainer mit ihren {b} Kämpfen. Ein Klick führt zum Team auf der Seite des "
                          "Ortes, an dem der Kampf stattfindet.",
+        "facet_role": "Bosse", "role_leader": "Arenaleiter", "role_elite": "Top Vier", "role_champion": "Champ", "role_rival": "Rivalen",
         "trainers_placeholder": "Name, Klasse oder Ort",
         "facet_class": "Klasse",
         "col_class": "Klasse",
@@ -332,6 +333,7 @@ STRINGS = {
         # ---- trainers
         "lead_trainers": "All {n} Trainers with their {b} battles. A click takes you to the team on the page of "
                          "the place where the battle happens.",
+        "facet_role": "Bosses", "role_leader": "Gym Leaders", "role_elite": "Elite Four", "role_champion": "Champions", "role_rival": "Rivals",
         "trainers_placeholder": "Name, class or place",
         "facet_class": "Class",
         "col_class": "Class",

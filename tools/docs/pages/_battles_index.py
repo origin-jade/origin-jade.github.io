@@ -128,6 +128,31 @@ def render_index(ctx):
 
 
 # ------------------------------------------------------------------ battles/trainers
+def _boss_roles():
+    """{id(person): "leader" | "elite" | "champion" | "rival" (several joined by spaces)}."""
+    out = {}
+
+    def add(es, role):
+        cur = out.get(id(es), "")
+        if role not in cur.split():
+            out[id(es)] = (cur + " " + role).strip()
+
+    for region in V.REGIONS:
+        for g in G.gyms(region):
+            for es in g.persons:
+                add(es, "leader")
+        e4, champ = G.league(region)
+        for sub in e4:
+            add(sub, "elite")
+        for sub in champ:
+            add(sub, "champion")
+    for _region, figures in S.rivals():
+        for fig in figures:
+            for es in fig:
+                add(es, "rival")
+    return out
+
+
 def _featured():
     """{id(person): page path} of the persons shown with full teams on a battle page."""
     out = {}
@@ -147,6 +172,14 @@ def render_trainers(ctx):
     any_anchor = any(ctx.has("trainer", e.const) for es, _r, _l, _n in rows[:50] for e in es) or any(
         ctx.has("trainer", e.const) for es, _r, _l, _n in rows for e in es)
     featured = _featured()
+    roles = _boss_roles()
+    # the league lists hold the league battles of a person; match them by their first battle
+    role_by_const = {}
+    for region in V.REGIONS:
+        e4, champ = G.league(region)
+        for sub, role in [(x, "elite") for x in e4] + [(x, "champion") for x in champ]:
+            for e in sub:
+                role_by_const[e.const] = role
     items, classes, places, orphans = [], {}, {}, []
     for es, region, top, n in rows:
         h = D.head_entry(es)
@@ -173,7 +206,9 @@ def render_trainers(ctx):
             href = ctx.url_for("location", V.place_key(h.map_id))
         elif href is None and any_anchor:
             orphans.append(es)
-        data = H.filter_attrs([name, cname, place], region=V.REGION_KEY.get(region, "other"), cls=ckey, loc=pkey)
+        role = set(roles.get(id(es), "").split()) | {role_by_const[e.const] for e in es if e.const in role_by_const}
+        data = H.filter_attrs([name, cname, place], region=V.REGION_KEY.get(region, "other"), cls=ckey, loc=pkey,
+                              role=" ".join(sorted(role)) or None)
         first_top = D.max_level(es[0])
         link = '<a href="%s">%s</a>' % (H.esc(href), H.esc(name)) if href else H.esc(name)
         items.append(([link, H.esc(cname), H.esc(place),
@@ -182,6 +217,8 @@ def render_trainers(ctx):
     popts = [(k, v[0], v[1]) for k, v in places.items()]
     bar = H.filter_bar(ctx, "trainers", placeholder=t("trainers_placeholder"), facets=[
         H.region_facet(ctx),
+        {"key": "role", "label": t("facet_role"), "style": "chips",
+         "options": [(r, t("role_" + r)) for r in ("leader", "elite", "champion", "rival")]},
         {"key": "loc", "label": ctx.ui("location"), "options": popts, "style": "select"},
     ])
     body = bar + H.table([(ctx.ui("trainer"), "main"), t("col_class"), ctx.ui("location"),

@@ -217,7 +217,6 @@ SITEMAP = {
     "guides/shiny": ("guides", 20, "Schillernde Pokémon", "Shiny Pokémon"),
     "guides/legendaries": ("guides", 30, "Legendäre Pokémon", "Legendary Pokémon"),
     "guides/gifts": ("guides", 40, "Geschenke & Tausch", "Gifts & in-game trades"),
-    "guides/pokeblocks": ("guides", 50, "Pokériegel", "Pokéblocks"),
     "guides/completion": ("guides", 60, "Pokédex vervollständigen", "Completing the Pokédex"),
     "guides/keyitems": ("guides", 70, "Schlüssel-Items", "Key items"),
 }
