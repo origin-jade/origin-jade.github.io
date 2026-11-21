@@ -18,7 +18,7 @@ PATH = "guides/shiny"
 
 S = {
     "de": {
-        "sh_lead": "Wie viele Begegnungen du für ein schillerndes Pokémon brauchst, was die Chance erhöht und welche Pokémon immer oder nie schillern.",
+        "sh_lead": "Was bei schillernden Pokémon in Origin Jade besonders ist – und die {n} Pokémon mit einer zweiten Shiny-Färbung.",
         "sh_sec_odds": "Wie viele Begegnungen brauche ich?",
         "sh_odds_intro": "Das hängt von der Einstellung „{option}“ ab, die du zu Spielbeginn wählst.",
         "sh_col_setting": "Einstellung",
@@ -30,8 +30,7 @@ S = {
         "sh_average": "Das ist ein Durchschnitt, kein Zähler: Jede Begegnung wird neu gewürfelt. Nach so vielen Begegnungen haben etwa zwei von drei Spielern ein Shiny gesehen – manche viel früher, manche deutlich später.",
         "sh_sec_charm": "Schillerpin",
         "sh_charm_effect": "Mit dem {charm} schillern Pokémon etwa {x}-mal so oft.",
-        "sh_charm_where": "Du bekommst ihn von Professor Eich im Labor in {place}, sobald dein Johto-Pokédex "
-                          "vollständig ist. Welche Arten dafür zählen, steht unter {completion}.",
+        "sh_charm_where": "Den {charm} bekommst du von Professor Eich im Labor in {place}, sobald dein Johto-Pokédex vollständig ist ({completion}).",
         "sh_completion": "Pokédex vervollständigen",
         "sh_sec_more": "Weitere Einflüsse",
         "sh_lure": "Auch {lures} erhöhen die Chance, solange sie wirken.",
@@ -40,7 +39,7 @@ S = {
         "sh_obtainable": "Wo du nicht fangen kannst, gibt es keine schillernden Pokémon.",
         "sh_roamer": "Umherstreifende Pokémon: Ob sie schillern, entscheidet sich einmal, wenn sie loslaufen.",
         "sh_clause": "Nuzlocke-Einstellung „{option}“: {choices}",
-        "sh_sec_locks": "Immer oder nie schillernd",
+        "sh_sec_locks": "Besonderheiten",
         "sh_lock_always": "Immer schillernd",
         "sh_lock_preview": "Schillernd genau wie in der Vorschau",
         "sh_lock_never": "Nie schillernd",
@@ -56,7 +55,7 @@ S = {
         "sh_alternate": "Alternativ",
     },
     "en": {
-        "sh_lead": "How many encounters you need for a shiny Pokémon, what raises the chance and which Pokémon are always or never shiny.",
+        "sh_lead": "What is special about shiny Pokémon in Origin Jade – and the {n} Pokémon with a second shiny colouring.",
         "sh_sec_odds": "How many encounters do I need?",
         "sh_odds_intro": "That depends on the setting “{option}” you choose at the start of the game.",
         "sh_col_setting": "Setting",
@@ -68,8 +67,7 @@ S = {
         "sh_average": "This is an average, not a counter: every encounter is rolled anew. After that many encounters about two out of three players have seen a shiny – some much earlier, some a lot later.",
         "sh_sec_charm": "Shiny Charm",
         "sh_charm_effect": "With the {charm}, Pokémon are shiny about {x} times as often.",
-        "sh_charm_where": "Professor Oak gives it to you in his lab in {place} once your Johto Pokédex is "
-                          "complete. Which species count is listed under {completion}.",
+        "sh_charm_where": "You get the {charm} from Professor Oak in the lab in {place} once your Johto Pokédex is complete ({completion}).",
         "sh_completion": "Completing the Pokédex",
         "sh_sec_more": "Other influences",
         "sh_lure": "{lures} also raise the chance while they are active.",
@@ -78,7 +76,7 @@ S = {
         "sh_obtainable": "Where you cannot catch Pokémon, there are no shiny Pokémon.",
         "sh_roamer": "Roaming Pokémon: whether they are shiny is decided once, when they start roaming.",
         "sh_clause": "Nuzlocke setting “{option}”: {choices}",
-        "sh_sec_locks": "Always or never shiny",
+        "sh_sec_locks": "What is special",
         "sh_lock_always": "Always shiny",
         "sh_lock_preview": "Shiny exactly as in the preview",
         "sh_lock_never": "Never shiny",
@@ -135,31 +133,15 @@ def render(ctx):
     rolls = WSH.charm_rolls()
     out = []
 
-    rows = []
-    for name, odds in zip(chance.choices, WSH.odds_table()):
-        rows.append([H.esc(name), H.esc(t("sh_one_in", n=ctx.num(round(65536 / odds))))])
-    body = H.table([(t("sh_col_setting"), "main"), (t("sh_col_chance"), "num")], rows)
-    body += H.prose(U.p(ctx, "sh_average"))
-    out.append(H.section(t("sh_sec_odds"), body, id="odds",
-                         intro=H.esc(t("sh_odds_intro", option=chance.name))))
-
-    # the charm: about (re-rolls + 1) times the chance at every setting
-    factors = {round(WSH.chance(odds, rolls) * 65536 / odds) for odds in WSH.odds_table()}
-    if factors != {rolls + 1}:
-        raise ValueError("shiny guide: the Shiny Charm factor is no longer about %d (%r)" % (rolls + 1, factors))
+    # only what the game's menus and the main-series rules do not already tell the player
+    rules = []
     givers = WSH.charm_givers()
-    body = U.p(ctx, "sh_charm_effect", charm=U.item(ctx, charm, icon=True), x=rolls + 1)
     if givers:
         place = U.join(ctx, sorted({U.place(ctx, m) for m, _ in givers}))
-        body += U.p(ctx, "sh_charm_where", place=place, completion=U.page(ctx, "guides/completion",
-                                                                          t("sh_completion")))
+        rules.append(U.fmt(ctx, "sh_charm_where", charm=U.item(ctx, charm), place=place,
+                           completion=U.page(ctx, "guides/completion", t("sh_completion"))))
     else:
         ctx.todo("shiny guide: no script hands out the Shiny Charm")
-    lures = [items.by_const(c, lang) for c in ("ITEM_LURE", "ITEM_SUPER_LURE", "ITEM_MAX_LURE")]
-    lures = [it for it in lures if it and WSH.marts_selling(it.const)]
-    if lures:
-        body += U.p(ctx, "sh_lure", lures=U.join(ctx, [U.item(ctx, it) for it in lures]))
-    out.append(H.section(t("sh_sec_charm"), H.prose(body), id="charm"))
 
     ents = _entries(lang)
     top = max(WSH.odds_table())
@@ -168,7 +150,6 @@ def render(ctx):
               ("sh_lock_never", [e for e in ents if e.shiny == "never"]),
               ("sh_lock_trade", [e for e in ents if e.shiny == "fixed"
                                  and WS.trade_shiny_value(e.trade["ot_id"], e.trade["personality"]) >= top])]
-    rules = []
     for key, lst in groups:
         lst = sorted(lst, key=lambda e: (SP.by_id(e.species, lang).natdex, e.map_id or ""))
         seen, names = set(), []
@@ -180,7 +161,7 @@ def render(ctx):
         if not names:
             continue
         if key == "sh_lock_always":
-            rules.append(U.fmt(ctx, "sh_rule_always", names=U.join(ctx, names)))
+            continue            # the red Gyarados: known from the original games
         elif key == "sh_lock_never":
             rules.append(U.fmt(ctx, "sh_rule_never", names=U.join(ctx, names)))
         elif key == "sh_lock_preview":
