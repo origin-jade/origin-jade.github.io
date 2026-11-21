@@ -964,8 +964,6 @@ def _render_species(ctx, site, i):
     out = []
     out.append(H.section(t("sec_stats"), H.split(H.stat_bars(ctx, sp.stats), _profile(ctx, site, sp)), id="stats"))
     out.append(H.section(t("sec_abilities"), _abilities_section(ctx, site, sp), id="abilities"))
-    out.append(H.section(t("sec_defense"), _defense_section(ctx, site, sp), id="defense",
-                         intro=H.esc(t("defense_intro", name=sp.name))))
     out.append(H.section(t("sec_evo"), _evolution_section(ctx, site, sp), id="evolution"))
     battle, look = site.forms[sp.id]
     if battle or look:
@@ -974,9 +972,6 @@ def _render_species(ctx, site, i):
     mbody, mintro = _moves_section(ctx, site, sp)
     out.append(H.section(t("sec_moves"), mbody, id="learnset", intro=mintro, cls="start-closed"))
     out.append(H.section(t("sec_where"), _where_section(ctx, site, sp, first, kinds), id="where"))
-    out.append(H.section(t("sec_breeding"), _breeding_section(ctx, site, sp, num), id="breeding"))
-    out.append(H.section(t("sec_dex"), _dex_section(ctx, site, sp, num), id="dex",
-                         intro=H.esc(t("dex_intro", title=dex_texts.dex_title("national", lang)))))
 
     chips = H.types(ctx, sp.types)
     if "none" in kinds:
