@@ -111,4 +111,4 @@ def render(ctx):
     out.append(H.section(ctx.t("br_sec_odd"),
                          U.p(ctx, "br_odd_text", where=U.place(ctx, odd.map_dir), shiny=odd.shiny_percent)
                          + H.table([(ctx.t("br_col_mon"), "main"), ctx.t("br_col_words")], rows), id="odd-egg"))
-    ctx.end("".join(out), lead=H.esc(ctx.t("br_lead")))
+    ctx.end("".join(out), lead=H.esc(ctx.t("br_lead")), outline=False, cls="no-tabs")
