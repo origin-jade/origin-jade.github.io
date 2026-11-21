@@ -320,6 +320,10 @@ a.mon-link span, a.item-link span { text-decoration: underline; text-decoration-
   .tbl-enc td.main, .tbl-shop td.main { grid-column: auto; font-size: .9375rem; }
   .tbl-enc td[data-l]::before, .tbl-shop td[data-l]::before { display: none; }
   .tbl-enc .meter { width: 2.25rem; }
+  /* trainer list: picture left, name above class and place */
+  .tbl-trainers tr { grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 1fr); align-items: center; column-gap: .25rem; }
+  .tbl-trainers td:first-child { grid-row: 1 / span 2; width: auto; }
+  .tbl-trainers td.main { grid-column: 2 / -1; }
   .tbl-enc-t tr { grid-template-columns: minmax(0, 1fr) auto auto; column-gap: .5rem; }
   .tbl-enc-t .tod { padding: .05rem .35rem; font-size: .75rem; }
   .tbl-enc-t td:last-child { min-width: 3.4rem; text-align: right; }
@@ -598,6 +602,9 @@ a.ent:hover { background: var(--jade-tint); box-shadow: none; }
 .map a { display: block; width: fit-content; max-width: 100%; }
 .map img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); }
 .map figcaption { margin-bottom: .35rem; font-size: .875rem; font-weight: 650; color: var(--muted); }
+.tbl-trainers td { vertical-align: middle; }
+.tbl-trainers td:first-child { width: 3rem; padding-right: 0; }
+.tbl-trainers .trainer-pic { display: block; width: 40px; height: 40px; }
 .sectabs { margin: 0 0 1.25rem; }
 .sectabs button { height: 2.25rem; }
 .is-tabbed > .sec { margin-top: 0; }

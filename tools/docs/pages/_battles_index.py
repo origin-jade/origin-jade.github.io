@@ -181,38 +181,57 @@ def render_trainers(ctx):
             for e in sub:
                 role_by_const[e.const] = role
     items, classes, places, orphans = [], {}, {}, []
-    for es, region, top, n in rows:
-        h = D.head_entry(es)
-        tr = V.trainer(ctx, h.const)
+    place_rank = {}
+    for es, _region, _top, _n in rows:
         name = V.person_name(ctx, es)
         if name == t("rival_name") and S._is_rival_variant(es):
             ssp = V.starter_species(ctx, es)
             if ssp is not None:
                 name = t("rival_variant", name=name, species=ssp.name)
-        cname = tr.class_name or ""
-        place = V.place_name(ctx, h.map_id)
-        ckey = slugs.anchor(cname) or "x"
-        pkey = slugs.anchor(place) or "x"
-        classes.setdefault(ckey, cname)
-        places.setdefault(pkey, (place, V.REGION_KEY.get(region, "other")))
-        href = None
-        for e in [h] + list(es):
-            href = ctx.url_for("trainer", e.const)
-            if href:
-                break
-        if href is None and id(es) in featured:
-            href = ctx.url(featured[id(es)])
-        if href is None and V.place_key(h.map_id):
-            href = ctx.url_for("location", V.place_key(h.map_id))
-        elif href is None and any_anchor:
+        person_roles = set(roles.get(id(es), "").split())
+        # one row per place: a person met in several places is listed at each of them
+        parts = {}
+        for e in es:
+            parts.setdefault(V.place_name(ctx, e.map_id), []).append(e)
+        orphan = False
+        for place, part in parts.items():
+            h = part[0]
+            tr = V.trainer(ctx, h.const)
+            region = levels.reader_region(h.map_id)
+            cname = tr.class_name or ""
+            ckey = slugs.anchor(cname) or "x"
+            pkey = slugs.anchor(place) or "x"
+            classes.setdefault(ckey, cname)
+            places.setdefault(pkey, (place, V.REGION_KEY.get(region, "other")))
+            href = None
+            for e in part:
+                href = ctx.url_for("trainer", e.const)
+                if href:
+                    break
+            if href is None and id(es) in featured:
+                href = ctx.url(featured[id(es)])
+            if href is None and V.place_key(h.map_id):
+                href = ctx.url_for("location", V.place_key(h.map_id))
+            elif href is None and any_anchor:
+                orphan = True
+            role = {role_by_const[e.const] for e in part if e.const in role_by_const}
+            if "rival" in person_roles:
+                role.add("rival")
+            if "leader" in person_roles and any(D.role_of(T.by_const(e.const)) == "leader" for e in part):
+                role.add("leader")
+            data = H.filter_attrs([name, cname, place], region=V.REGION_KEY.get(region, "other"), cls=ckey, loc=pkey,
+                                  role=" ".join(sorted(role)) or None)
+            link = '<a href="%s">%s</a>' % (H.esc(href), H.esc(name)) if href else H.esc(name)
+            pic = H.trainer_pic(ctx, tr).replace('width="64" height="64"', 'width="40" height="40"')
+            # order: region, place in story order, then the moment the battle opens up -
+            # a leader who takes over a gym later follows the one before
+            key = (V.REGIONS.index(region) if region in V.REGIONS else len(V.REGIONS), place,
+                   min(D.first_step(e) for e in part), len(items))
+            place_rank[(key[0], place)] = min(place_rank.get((key[0], place), D.map_rank(h.map_id)),
+                                              D.map_rank(h.map_id))
+            items.append(([pic, link, H.esc(cname), H.esc(place)], data, key))
+        if orphan:
             orphans.append(es)
-        role = set(roles.get(id(es), "").split()) | {role_by_const[e.const] for e in es if e.const in role_by_const}
-        data = H.filter_attrs([name, cname, place], region=V.REGION_KEY.get(region, "other"), cls=ckey, loc=pkey,
-                              role=" ".join(sorted(role)) or None)
-        first_top = D.max_level(es[0])
-        link = '<a href="%s">%s</a>' % (H.esc(href), H.esc(name)) if href else H.esc(name)
-        items.append(([link, H.esc(cname), H.esc(place),
-                       H.esc(ctx.level_range(min(first_top, top), top)), ctx.num(n) if n > 1 else None], data))
     # the places follow the region chosen first (option attribute data-region)
     popts = [(k, v[0], v[1]) for k, v in places.items()]
     bar = H.filter_bar(ctx, "trainers", placeholder=t("trainers_placeholder"), facets=[
@@ -221,9 +240,10 @@ def render_trainers(ctx):
          "options": [(r, t("role_" + r)) for r in ("leader", "elite", "champion", "rival")]},
         {"key": "loc", "label": ctx.ui("location"), "options": popts, "style": "select"},
     ])
-    body = bar + H.table([(ctx.ui("trainer"), "main"), t("col_class"), ctx.ui("location"),
-                          (ctx.ui("levels"), "num"), (t("col_battles"), "num")],
-                         [r for r, _d in items], id="trainers", row_attrs=[d for _r, d in items])
+    items.sort(key=lambda it: (it[2][0], place_rank[(it[2][0], it[2][1])], it[2][2], it[2][3]))
+    body = bar + H.table([("", "min"), (ctx.ui("trainer"), "main"), t("col_class"), ctx.ui("location")],
+                         [r for r, _d, _k in items], id="trainers", cls="tbl-trainers",
+                         row_attrs=[d for _r, d, _k in items])
     if orphans:
         cards = []
         for es in orphans:
