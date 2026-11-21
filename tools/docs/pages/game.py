@@ -10,12 +10,12 @@ from pages import _game_util as U
 
 # "What's new" (_game_features) and "Settings & game modes" (_game_settings) are written but
 # not built: the owner wants the site to stay a reference, and the menus explain themselves.
-PAGES = U.load_pages(["_game_start", "_game_levels", "_game_credits"])
+PAGES = U.load_pages(["_game_start", "_game_levels"])
 STRINGS = U.merge_strings(PAGES)
 
 # page path -> key of its search keywords
 KEYWORDS = {"game/features": "ft_keywords", "game/start": "st_keywords", "game/settings": "set_keywords",
-            "game/levels": "lv_keywords", "game/credits": "cr_keywords"}
+            "game/levels": "lv_keywords"}
 
 
 def register(ctx):
