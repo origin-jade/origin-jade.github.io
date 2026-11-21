@@ -360,7 +360,21 @@
       var b = $("button[aria-pressed=true]", set);
       return b ? b.getAttribute("data-value") : "";
     }
+    /* select options bound to a region are only offered for the chosen region */
+    function regionOptions() {
+      var region = "";
+      chipsets.forEach(function (s) { if (s.getAttribute("data-key") === "region") region = chipValue(s); });
+      selects.forEach(function (s) {
+        $$("option[data-region]", s).forEach(function (o) {
+          var off = !!region && o.getAttribute("data-region") !== region;
+          o.hidden = off;
+          o.disabled = off;
+          if (off && o.selected) s.value = "";
+        });
+      });
+    }
     function apply() {
+      regionOptions();
       var toks = text ? fold(text.value).split(" ").filter(Boolean) : [];
       var keys = [];
       selects.forEach(function (s) { facets[s.name] = s.value; });
