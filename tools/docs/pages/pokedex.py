@@ -92,6 +92,7 @@ STRINGS = {
         "sec_forms": "Formen",
         "sec_moves": "Attacken",
         "sec_where": "Fundorte",
+        "area_alt": "Karte von {region} mit den Fundorten",
         "sec_breeding": "Zucht",
         "sec_dex": "Pokédex-Nummern",
         "dex_intro": "Die Nummer oben auf der Seite ist die des Spiels („{title}“).",
@@ -215,6 +216,7 @@ STRINGS = {
         "sec_forms": "Forms",
         "sec_moves": "Moves",
         "sec_where": "Where to find it",
+        "area_alt": "Map of {region} with the places where it is found",
         "sec_breeding": "Breeding",
         "sec_dex": "Pokédex numbers",
         "dex_intro": "The number at the top of the page is the game's own (“{title}”).",
@@ -785,6 +787,41 @@ def _links(ctx, ids):
     return _join(ctx, [H.species_link(ctx, s) for s in sps if s])
 
 
+_REGION_MAPS = set()
+
+
+def _area_maps(ctx, rows):
+    """The region maps with the places of the wild rows lit up, as the Pokédex of the game
+    shows them. Places without a spot on a region map are left out."""
+    from gamedata import regionmap
+    out = []
+    for region in D.REGIONS:
+        cells = regionmap.cells(region)
+        spots = []
+        for r in rows:
+            if r["region"] != region:
+                continue
+            for c in cells.get(r["mapsec"], ()):
+                if c not in spots:
+                    spots.append(c)
+        if not spots:
+            continue
+        if (ctx.lang, region) not in _REGION_MAPS:
+            _REGION_MAPS.add((ctx.lang, region))
+            ctx.write_image("regionmap/%s.png" % region, regionmap.render(region).convert("P", palette=1, colors=255))
+        g = regionmap.grid(region)
+        w, h = g["x0"] * 2 + g["cols"] * g["cell"], 160
+        marks = "".join('<i style="left:%.3f%%;top:%.3f%%"></i>'
+                        % ((g["x0"] + col * g["cell"]) * 100.0 / w, (g["y0"] + row * g["cell"]) * 100.0 / h)
+                        for col, row in sorted(spots))
+        name = ctx.ui("region_" + region)
+        out.append('<figure class="rmap"><div class="rmap-box"><img class="px" src="%s" width="%d" height="%d" '
+                   'alt="%s" loading="lazy" decoding="async">%s</div><figcaption>%s</figcaption></figure>'
+                   % (ctx.asset("regionmap", region), w * 2, h * 2, H.esc(ctx.t("area_alt", region=name)), marks,
+                      H.esc(name)))
+    return '<div class="rmaps">%s</div>' % "".join(out) if out else ""
+
+
 def _where_section(ctx, site, sp, first, kinds):
     t, lang = ctx.t, ctx.lang
     a = site.avail[sp.id]
@@ -804,7 +841,8 @@ def _where_section(ctx, site, sp, first, kinds):
         times = ", ".join(t("time_span", name=ctx.ui("time_" + k), hours=EVO.hours_text(ctx, *spans[k]))
                           for k in ("day", "night") if k in spans)
         show_times = any(r["times"] for r in wild)
-        body = (H.p(t("where_wild_intro", times=times), "muted") if show_times else "") + _wild_table(ctx, wild)
+        body = (_area_maps(ctx, wild) + (H.p(t("where_wild_intro", times=times), "muted") if show_times else "")
+                + _wild_table(ctx, wild))
         held = _held_items(ctx, sp)
         if held:
             body += "<p>%s</p>" % EVO._fmt(ctx, "held_line", items=EVO.V("", held)).html
