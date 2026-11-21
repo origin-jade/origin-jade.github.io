@@ -93,6 +93,7 @@ STRINGS = {
         "sec_moves": "Attacken",
         "sec_where": "Fundorte",
         "area_alt": "Karte von {region} mit den Fundorten",
+        "area_jk": "Kanto und Johto",
         "sec_breeding": "Zucht",
         "sec_dex": "Pokédex-Nummern",
         "dex_intro": "Die Nummer oben auf der Seite ist die des Spiels („{title}“).",
@@ -217,6 +218,7 @@ STRINGS = {
         "sec_moves": "Moves",
         "sec_where": "Where to find it",
         "area_alt": "Map of {region} with the places where it is found",
+        "area_jk": "Kanto and Johto",
         "sec_breeding": "Breeding",
         "sec_dex": "Pokédex numbers",
         "dex_intro": "The number at the top of the page is the game's own (“{title}”).",
@@ -795,11 +797,12 @@ def _area_maps(ctx, rows):
     shows them. Places without a spot on a region map are left out."""
     from gamedata import regionmap
     out = []
-    for region in D.REGIONS:
+    # the game shows Kanto and Johto on one map
+    for region, members in (("jk", ("kanto", "johto", None)), ("hoenn", ("hoenn",))):
         cells = regionmap.cells(region)
         spots = []
         for r in rows:
-            if r["region"] != region:
+            if r["region"] not in members:
                 continue
             for c in cells.get(r["mapsec"], ()):
                 if c not in spots:
@@ -808,14 +811,18 @@ def _area_maps(ctx, rows):
             continue
         if (ctx.lang, region) not in _REGION_MAPS:
             _REGION_MAPS.add((ctx.lang, region))
-            ctx.write_image("regionmap/%s.png" % region, regionmap.render(region).convert("P", palette=1, colors=255))
+            from PIL import Image
+            im = regionmap.render(region)
+            # three times the size with hard pixels, so the browser can scale it down smoothly
+            im = im.resize((im.width * 3, im.height * 3), Image.NEAREST)
+            ctx.write_image("regionmap/%s.png" % region, im.convert("P", palette=1, colors=255))
         g = regionmap.grid(region)
         w, h = g["x0"] * 2 + g["cols"] * g["cell"], 160
         marks = "".join('<i style="left:%.3f%%;top:%.3f%%"></i>'
                         % ((g["x0"] + col * g["cell"]) * 100.0 / w, (g["y0"] + row * g["cell"]) * 100.0 / h)
                         for col, row in sorted(spots))
-        name = ctx.ui("region_" + region)
-        out.append('<figure class="rmap"><div class="rmap-box"><img class="px" src="%s" width="%d" height="%d" '
+        name = ctx.t("area_jk") if region == "jk" else ctx.ui("region_" + region)
+        out.append('<figure class="rmap"><div class="rmap-box"><img src="%s" width="%d" height="%d" '
                    'alt="%s" loading="lazy" decoding="async">%s</div><figcaption>%s</figcaption></figure>'
                    % (ctx.asset("regionmap", region), w * 2, h * 2, H.esc(ctx.t("area_alt", region=name)), marks,
                       H.esc(name)))
