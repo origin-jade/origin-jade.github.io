@@ -501,6 +501,8 @@
       return s.parentNode === body && s.id && s.firstElementChild && s.firstElementChild.tagName === "H2";
     });
     if (secs.length < 2) return null;
+    /* a page that fits on the screen anyway keeps its sections below each other */
+    if (body.offsetHeight < window.innerHeight * 0.8) return null;
     /* a filter bar that spans several sections needs all of them on screen */
     var spans = $$("form[data-filter]").some(function (f) {
       var t = doc.getElementById(f.getAttribute("data-filter"));

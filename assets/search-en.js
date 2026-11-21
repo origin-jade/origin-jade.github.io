@@ -3294,6 +3294,7 @@ window.OJ_SEARCH={lang:"en",kinds:["species", "move", "ability", "item", "locati
 ["Abilities",6,"data/abilities/index.html"],
 ["All trainers",6,"battles/trainers.html"],
 ["Getting started & FAQ",6,"game/start.html","getting started faq questions help johto hoenn ticket gs ball clock save file"],
+["Credits",6,"game/credits.html","credits thanks contributors team heart soul expansion"],
 ["Breeding",6,"guides/breeding.html"],
 ["Shiny Pokémon",6,"guides/shiny.html"],
 ["Legendary Pokémon",6,"guides/legendaries.html"],
