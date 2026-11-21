@@ -3301,7 +3301,6 @@ window.OJ_SEARCH={lang:"de",kinds:["species", "move", "ability", "item", "locati
 ["Alle Trainer",6,"battles/trainers.html"],
 ["Erste Schritte & FAQ",6,"game/start.html","erste schritte faq fragen hilfe einstieg johto hoenn ticket gs-ball uhr spielstand"],
 ["Level- & EP-System",6,"game/levels.html","level erfahrung ep exp levelcap level-limit gehorsam ep-teiler skalierung"],
-["Credits",6,"game/credits.html","credits danksagung mitwirkende team heart soul expansion abspann"],
 ["Zucht",6,"guides/breeding.html"],
 ["Schillernde Pokémon",6,"guides/shiny.html"],
 ["Legendäre Pokémon",6,"guides/legendaries.html"],
