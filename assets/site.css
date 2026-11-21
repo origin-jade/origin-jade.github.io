@@ -580,6 +580,10 @@ a.ent:hover { background: var(--jade-tint); box-shadow: none; }
 .tablist { gap: 0; padding: 0; border-radius: 0; background: none; border-bottom: 1px solid var(--line); width: auto; }
 .tablist button { height: 2rem; border-radius: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .tablist button[aria-selected="true"] { background: none; box-shadow: none; border-bottom-color: var(--jade); }
+.map { margin: 0 0 1.5rem; }
+.map a { display: block; width: fit-content; max-width: 100%; }
+.map img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); }
+.map figcaption { margin-bottom: .35rem; font-size: .875rem; font-weight: 650; color: var(--muted); }
 .sectabs { margin: 0 0 1.25rem; }
 .sectabs button { height: 2.25rem; }
 .is-tabbed > .sec { margin-top: 0; }
