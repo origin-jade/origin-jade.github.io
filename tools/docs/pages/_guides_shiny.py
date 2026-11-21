@@ -18,35 +18,37 @@ PATH = "guides/shiny"
 
 S = {
     "de": {
-        "sh_lead": "Wie oft Pokémon schillern, was die Chance erhöht, welche Pokémon immer oder nie schillern – "
-                   "und die {n} Pokémon mit einer zweiten Shiny-Färbung.",
-        "sh_sec_odds": "Shiny-Chance",
-        "sh_odds_intro": "Die Einstellung „{option}“ (Reiter „{tab}“) legt die Grundchance fest. Du wählst sie "
-                         "zu Spielbeginn.",
+        "sh_lead": "Wie viele Begegnungen du für ein schillerndes Pokémon brauchst, was die Chance erhöht und welche Pokémon immer oder nie schillern.",
+        "sh_sec_odds": "Wie viele Begegnungen brauche ich?",
+        "sh_odds_intro": "Das hängt von der Einstellung „{option}“ ab, die du zu Spielbeginn wählst.",
         "sh_col_setting": "Einstellung",
-        "sh_col_chance": "Chance",
+        "sh_col_chance": "Ein Shiny im Schnitt alle",
         "sh_col_charm": "Mit {charm}",
         "sh_col_desc": "Beschreibung im Spiel",
-        "sh_one_in": "1 zu {n}",
+        "sh_one_in": "{n} Begegnungen",
         "sh_about": "≈ 1 zu {n}",
+        "sh_average": "Das ist ein Durchschnitt, kein Zähler: Jede Begegnung wird neu gewürfelt. Nach so vielen Begegnungen haben etwa zwei von drei Spielern ein Shiny gesehen – manche viel früher, manche deutlich später.",
         "sh_sec_charm": "Schillerpin",
-        "sh_charm_effect": "Mit dem {charm} würfelt das Spiel bis zu {n}-mal neu, wenn ein Pokémon nicht "
-                           "schillert. Das gilt für wilde Pokémon, Geschenke, Eier und die Starter-Vorschau.",
+        "sh_charm_effect": "Mit dem {charm} schillern Pokémon etwa {x}-mal so oft.",
         "sh_charm_where": "Du bekommst ihn von Professor Eich im Labor in {place}, sobald dein Johto-Pokédex "
                           "vollständig ist. Welche Arten dafür zählen, steht unter {completion}.",
         "sh_completion": "Pokédex vervollständigen",
         "sh_sec_more": "Weitere Einflüsse",
-        "sh_lure": "{lures}: Solange das Item wirkt, gibt es einen zusätzlichen Wurf. Zu kaufen in {where}.",
+        "sh_lure": "Auch {lures} erhöhen die Chance, solange sie wirken.",
         "sh_preview": "Starter: Die Vorschau im Labor würfelt einmal pro Pokéball. Der Starter schillert genau "
                       "dann, wenn er in der Vorschau geschillert hat. Der {charm} zählt mit.",
         "sh_obtainable": "Wo du nicht fangen kannst, gibt es keine schillernden Pokémon.",
         "sh_roamer": "Umherstreifende Pokémon: Ob sie schillern, entscheidet sich einmal, wenn sie loslaufen.",
         "sh_clause": "Nuzlocke-Einstellung „{option}“: {choices}",
-        "sh_sec_locks": "Feste Regeln für einzelne Pokémon",
+        "sh_sec_locks": "Immer oder nie schillernd",
         "sh_lock_always": "Immer schillernd",
         "sh_lock_preview": "Schillernd genau wie in der Vorschau",
         "sh_lock_never": "Nie schillernd",
         "sh_lock_trade": "Tausch-Pokémon: nie schillernd",
+        "sh_rule_always": "Immer schillernd: {names}.",
+        "sh_rule_never": "Nie schillernd: {names}.",
+        "sh_rule_preview": "Starter schillern genau dann, wenn sie in der Vorschau des Pokéballs geschillert haben.",
+        "sh_rule_trade": "Pokémon aus einem Tausch im Spiel schillern nie.",
         "sh_sec_alt": "Zweite Shiny-Färbung",
         "sh_alt_intro": "Diese {n} Pokémon haben eine zweite Shiny-Färbung. Das Spiel zeigt sie, wenn die "
                         "Einstellung „{option}“ (Reiter „{tab}“) auf „{on}“ steht.",
@@ -54,35 +56,37 @@ S = {
         "sh_alternate": "Alternativ",
     },
     "en": {
-        "sh_lead": "How often Pokémon are shiny, what raises the odds, which Pokémon are always or never shiny – "
-                   "and the {n} Pokémon with a second shiny colouring.",
-        "sh_sec_odds": "Shiny odds",
-        "sh_odds_intro": "The setting “{option}” (tab “{tab}”) sets the base odds. You choose it when you start "
-                         "the game.",
+        "sh_lead": "How many encounters you need for a shiny Pokémon, what raises the chance and which Pokémon are always or never shiny.",
+        "sh_sec_odds": "How many encounters do I need?",
+        "sh_odds_intro": "That depends on the setting “{option}” you choose at the start of the game.",
         "sh_col_setting": "Setting",
-        "sh_col_chance": "Odds",
+        "sh_col_chance": "One shiny on average every",
         "sh_col_charm": "With {charm}",
         "sh_col_desc": "Description in the game",
-        "sh_one_in": "1 in {n}",
+        "sh_one_in": "{n} encounters",
         "sh_about": "≈ 1 in {n}",
+        "sh_average": "This is an average, not a counter: every encounter is rolled anew. After that many encounters about two out of three players have seen a shiny – some much earlier, some a lot later.",
         "sh_sec_charm": "Shiny Charm",
-        "sh_charm_effect": "With the {charm} the game rolls up to {n} more times when a Pokémon is not shiny. "
-                           "This applies to wild Pokémon, gifts, eggs and the starter preview.",
+        "sh_charm_effect": "With the {charm}, Pokémon are shiny about {x} times as often.",
         "sh_charm_where": "Professor Oak gives it to you in his lab in {place} once your Johto Pokédex is "
                           "complete. Which species count is listed under {completion}.",
         "sh_completion": "Completing the Pokédex",
         "sh_sec_more": "Other influences",
-        "sh_lure": "{lures}: while the item is active you get one extra roll. On sale in {where}.",
+        "sh_lure": "{lures} also raise the chance while they are active.",
         "sh_preview": "Starters: the preview in the lab rolls once per Poké Ball. The starter is shiny exactly "
                       "when it was shiny in the preview. The {charm} counts.",
         "sh_obtainable": "Where you cannot catch Pokémon, there are no shiny Pokémon.",
         "sh_roamer": "Roaming Pokémon: whether they are shiny is decided once, when they start roaming.",
         "sh_clause": "Nuzlocke setting “{option}”: {choices}",
-        "sh_sec_locks": "Fixed rules for single Pokémon",
+        "sh_sec_locks": "Always or never shiny",
         "sh_lock_always": "Always shiny",
         "sh_lock_preview": "Shiny exactly as in the preview",
         "sh_lock_never": "Never shiny",
         "sh_lock_trade": "In-game trades: never shiny",
+        "sh_rule_always": "Always shiny: {names}.",
+        "sh_rule_never": "Never shiny: {names}.",
+        "sh_rule_preview": "Starters are shiny exactly when they were shiny in the preview of the Poké Ball.",
+        "sh_rule_trade": "Pokémon from an in-game trade are never shiny.",
         "sh_sec_alt": "Second shiny colouring",
         "sh_alt_intro": "These {n} Pokémon have a second shiny colouring. The game shows it when the setting "
                         "“{option}” (tab “{tab}”) is set to “{on}”.",
@@ -132,48 +136,30 @@ def render(ctx):
     out = []
 
     rows = []
-    for name, desc, odds in zip(chance.choices, chance.descriptions, WSH.odds_table()):
-        base = round(65536 / odds)
-        with_charm = round(1 / WSH.chance(odds, rolls))
-        rows.append([H.esc(name), H.esc(t("sh_one_in", n=ctx.num(base))),
-                     H.esc(t("sh_about", n=ctx.num(with_charm))), H.esc(desc)])
-    out.append(H.section(t("sh_sec_odds"), H.table(
-        [(t("sh_col_setting"), "main"), (t("sh_col_chance"), "num"),
-         (t("sh_col_charm", charm=charm.name), "num"), t("sh_col_desc")], rows), id="odds",
-        intro=H.esc(t("sh_odds_intro", option=chance.name, tab=chance.tab))))
+    for name, odds in zip(chance.choices, WSH.odds_table()):
+        rows.append([H.esc(name), H.esc(t("sh_one_in", n=ctx.num(round(65536 / odds))))])
+    body = H.table([(t("sh_col_setting"), "main"), (t("sh_col_chance"), "num")], rows)
+    body += H.prose(U.p(ctx, "sh_average"))
+    out.append(H.section(t("sh_sec_odds"), body, id="odds",
+                         intro=H.esc(t("sh_odds_intro", option=chance.name))))
 
+    # the charm: about (re-rolls + 1) times the chance at every setting
+    factors = {round(WSH.chance(odds, rolls) * 65536 / odds) for odds in WSH.odds_table()}
+    if factors != {rolls + 1}:
+        raise ValueError("shiny guide: the Shiny Charm factor is no longer about %d (%r)" % (rolls + 1, factors))
     givers = WSH.charm_givers()
-    body = U.p(ctx, "sh_charm_effect", charm=U.item(ctx, charm, icon=True), n=rolls)
+    body = U.p(ctx, "sh_charm_effect", charm=U.item(ctx, charm, icon=True), x=rolls + 1)
     if givers:
         place = U.join(ctx, sorted({U.place(ctx, m) for m, _ in givers}))
         body += U.p(ctx, "sh_charm_where", place=place, completion=U.page(ctx, "guides/completion",
                                                                           t("sh_completion")))
     else:
         ctx.todo("shiny guide: no script hands out the Shiny Charm")
-    out.append(H.section(t("sh_sec_charm"), H.prose(body), id="charm"))
-
-    fl = WSH.flags()
-    more = []
     lures = [items.by_const(c, lang) for c in ("ITEM_LURE", "ITEM_SUPER_LURE", "ITEM_MAX_LURE")]
-    lures = [it for it in lures if it]
-    shops = []
-    for it in lures:
-        for mid in WSH.marts_selling(it.const):
-            x = U.place(ctx, mid)
-            if x not in shops:
-                shops.append(x)
-    if lures and shops:
-        more.append(U.fmt(ctx, "sh_lure", lures=U.join(ctx, [U.item(ctx, it) for it in lures]),
-                          where=U.join(ctx, shops)))
-    more.append(U.fmt(ctx, "sh_preview", charm=U.item(ctx, charm)))
-    if fl.get("P_ONLY_OBTAINABLE_SHINIES"):
-        more.append(U.fmt(ctx, "sh_obtainable"))
-    more.append(U.fmt(ctx, "sh_roamer"))
-    clause = WSH.option("ITEM_NUZLOCKE_SHINY_CLAUSE", lang)
-    more.append(U.fmt(ctx, "sh_clause", option=U.e(clause.name), choices=U.e(" ".join(
-        "„%s“ – %s" % (c, d) if lang == "de" else "“%s” – %s" % (c, d)
-        for c, d in zip(clause.choices, clause.descriptions)))))
-    out.append(H.section(t("sh_sec_more"), H.ul(more), id="more"))
+    lures = [it for it in lures if it and WSH.marts_selling(it.const)]
+    if lures:
+        body += U.p(ctx, "sh_lure", lures=U.join(ctx, [U.item(ctx, it) for it in lures]))
+    out.append(H.section(t("sh_sec_charm"), H.prose(body), id="charm"))
 
     ents = _entries(lang)
     top = max(WSH.odds_table())
@@ -182,7 +168,7 @@ def render(ctx):
               ("sh_lock_never", [e for e in ents if e.shiny == "never"]),
               ("sh_lock_trade", [e for e in ents if e.shiny == "fixed"
                                  and WS.trade_shiny_value(e.trade["ot_id"], e.trade["personality"]) >= top])]
-    pairs = []
+    rules = []
     for key, lst in groups:
         lst = sorted(lst, key=lambda e: (SP.by_id(e.species, lang).natdex, e.map_id or ""))
         seen, names = set(), []
@@ -191,10 +177,24 @@ def render(ctx):
             if x not in seen:
                 seen.add(x)
                 names.append(x)
-        if names:
-            pairs.append((t(key), ", ".join(names)))
-    if pairs:
-        out.append(H.section(t("sh_sec_locks"), "".join(H.sub(k, "<p>%s</p>" % v) for k, v in pairs), id="locks"))
+        if not names:
+            continue
+        if key == "sh_lock_always":
+            rules.append(U.fmt(ctx, "sh_rule_always", names=U.join(ctx, names)))
+        elif key == "sh_lock_never":
+            rules.append(U.fmt(ctx, "sh_rule_never", names=U.join(ctx, names)))
+        elif key == "sh_lock_preview":
+            # the sentence names the starters as a group
+            if any(e.kind != "gift" for e in lst):
+                raise ValueError("shiny guide: a preview-locked Pokémon is not a gift")
+            rules.append(U.fmt(ctx, "sh_rule_preview"))
+        else:
+            # the sentence covers every in-game trade
+            if len(lst) != len([e for e in ents if e.kind == "trade"]):
+                raise ValueError("shiny guide: not every in-game trade is shiny-locked any more")
+            rules.append(U.fmt(ctx, "sh_rule_trade"))
+    if rules:
+        out.append(H.section(t("sh_sec_locks"), H.prose(H.ul(rules)), id="locks"))
 
     cards = []
     for sp in alt:
