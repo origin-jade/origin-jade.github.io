@@ -1,0 +1,5 @@
+# The repository ignores *.js (build output); the site script is source.
+!static/site.js
+# registry cache of --fast builds
+.cache/
+__pycache__/
