@@ -815,7 +815,13 @@ def _area_maps(ctx, rows):
             im = regionmap.render(region)
             # three times the size with hard pixels, so the browser can scale it down smoothly
             im = im.resize((im.width * 3, im.height * 3), Image.NEAREST)
-            ctx.write_image("regionmap/%s.png" % region, im.convert("P", palette=1, colors=255))
+            # saved without a transparent colour: every colour of the map is part of the picture
+            import os
+            from gamedata import maprender
+            rel = "assets/regionmap/%s.png" % region
+            os.makedirs(os.path.dirname(ctx._path(rel)), exist_ok=True)
+            maprender.save_png(im, ctx._path(rel))
+            ctx.written_assets.add(rel)
         g = regionmap.grid(region)
         w, h = g["x0"] * 2 + g["cols"] * g["cell"], 160
         marks = "".join('<i style="left:%.3f%%;top:%.3f%%"></i>'
