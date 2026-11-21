@@ -3299,7 +3299,6 @@ window.OJ_SEARCH={lang:"de",kinds:["species", "move", "ability", "item", "locati
 ["Schillernde Pokémon",6,"guides/shiny.html"],
 ["Legendäre Pokémon",6,"guides/legendaries.html"],
 ["Geschenke & Tausch",6,"guides/gifts.html"],
-["Pokériegel",6,"guides/pokeblocks.html"],
 ["Pokédex vervollständigen",6,"guides/completion.html"],
 ["Schlüssel-Items",6,"guides/keyitems.html"],
 ["Start",6,"index.html","start übersicht origin jade doku"],

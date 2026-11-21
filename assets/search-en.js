@@ -3299,7 +3299,6 @@ window.OJ_SEARCH={lang:"en",kinds:["species", "move", "ability", "item", "locati
 ["Shiny Pokémon",6,"guides/shiny.html"],
 ["Legendary Pokémon",6,"guides/legendaries.html"],
 ["Gifts & in-game trades",6,"guides/gifts.html"],
-["Pokéblocks",6,"guides/pokeblocks.html"],
 ["Completing the Pokédex",6,"guides/completion.html"],
 ["Key items",6,"guides/keyitems.html"],
 ["Home",6,"index.html","home overview origin jade guide"],
