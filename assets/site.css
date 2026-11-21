@@ -580,6 +580,11 @@ a.ent:hover { background: var(--jade-tint); box-shadow: none; }
 .tablist { gap: 0; padding: 0; border-radius: 0; background: none; border-bottom: 1px solid var(--line); width: auto; }
 .tablist button { height: 2rem; border-radius: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .tablist button[aria-selected="true"] { background: none; box-shadow: none; border-bottom-color: var(--jade); }
+.sectabs { margin: 0 0 1.25rem; }
+.sectabs button { height: 2.25rem; }
+.is-tabbed > .sec { margin-top: 0; }
+.is-tabbed > .sec > h2 { display: none; }
+html.js .has-tabs .outline { display: none; }
 .hero { border-radius: 6px; }
 .jcard { border-radius: 4px; }
 .jcard:has(h3 a):hover { box-shadow: none; }
@@ -635,6 +640,7 @@ summary.tr-h:hover { background: var(--jade-tint); }
   .topbar, .sidebar, .outline, .prevnext, .filter, .skip, .scrim { display: none !important; }
   .layout { display: block; } .page { padding: 0; } body { background: #fff; }
   .tabs .tab[hidden] { display: block !important; }
+  .sectabs { display: none; } .is-tabbed > .sec[hidden] { display: block !important; } .is-tabbed > .sec > h2 { display: block; }
 }
 /* type colours */
 .t-normal{--t:173 173 123}

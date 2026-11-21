@@ -479,8 +479,64 @@
     show(0, false);
     return { panels: panels, show: show };
   }).filter(Boolean);
+  /* ---- section tabs: the main sections of a page, one at a time ---- */
+  var secTabs = (function () {
+    var body = $("body:not(.home) .page-body");
+    if (!body) return null;
+    var secs = $$(".sec", body).filter(function (s) {
+      return s.parentNode === body && s.id && s.firstElementChild && s.firstElementChild.tagName === "H2";
+    });
+    if (secs.length < 2) return null;
+    /* a filter bar that spans several sections needs all of them on screen */
+    var spans = $$("form[data-filter]").some(function (f) {
+      var t = doc.getElementById(f.getAttribute("data-filter"));
+      return t && secs.filter(function (s) { return t === s || t.contains(s); }).length > 1;
+    });
+    if (spans) return null;
+    var bar = el("div", "tablist sectabs");
+    bar.setAttribute("role", "tablist");
+    var tabs = secs.map(function (s, i) {
+      var b = el("button", "", s.firstElementChild.textContent);
+      b.type = "button";
+      b.id = s.id + "-sectab";
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-controls", s.id);
+      s.setAttribute("role", "tabpanel");
+      s.setAttribute("aria-labelledby", b.id);
+      b.addEventListener("click", function () {
+        show(i, false);
+        try { history.replaceState(null, "", location.pathname + location.search + "#" + s.id); } catch (e) { /* file:// */ }
+      });
+      bar.appendChild(b);
+      return b;
+    });
+    function show(n, focus) {
+      secs.forEach(function (s, i) {
+        s.hidden = i !== n;
+        tabs[i].setAttribute("aria-selected", i === n ? "true" : "false");
+        tabs[i].tabIndex = i === n ? 0 : -1;
+      });
+      if (focus) tabs[n].focus();
+    }
+    bar.addEventListener("keydown", function (e) {
+      var i = tabs.indexOf(doc.activeElement), n = -1;
+      if (i < 0) return;
+      if (e.key === "ArrowRight") n = (i + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") n = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") n = 0;
+      else if (e.key === "End") n = tabs.length - 1;
+      if (n >= 0) { e.preventDefault(); show(n, true); }
+    });
+    body.insertBefore(bar, secs[0]);
+    body.classList.add("is-tabbed");
+    if (page) page.classList.add("has-tabs");
+    show(0, false);
+    return { secs: secs, show: show };
+  })();
   /* ---- sections fold: click a heading to hide or show its section ---- */
-  var folds = $$("body:not(.home) .page-body .sec > h2, body:not(.home) .page-body .sub > h3").map(function (h) {
+  var folds = $$("body:not(.home) .page-body .sec > h2, body:not(.home) .page-body .sub > h3").filter(function (h) {
+    return !secTabs || secTabs.secs.indexOf(h.parentNode) < 0;
+  }).map(function (h) {
     var box = h.parentNode;
     h.setAttribute("role", "button");
     h.tabIndex = 0;
@@ -549,10 +605,14 @@
     tabsets.forEach(function (s) {
       s.panels.forEach(function (p, i) { if (p === t || p.contains(t)) s.show(i, false); });
     });
+    var isTab = false;
+    if (secTabs) secTabs.secs.forEach(function (x, i) {
+      if (x === t || x.contains(t)) { secTabs.show(i, false); isTab = x === t; }
+    });
     folds.forEach(function (f) { if (f.box === t || f.box.contains(t)) f.set(true); });
     for (var d = t; d && d !== doc.body; d = d.parentNode) if (d.tagName === "DETAILS") d.open = true;
     syncAll();
-    if (t.scrollIntoView) t.scrollIntoView();
+    if (t.scrollIntoView && !isTab) t.scrollIntoView();
   }
   openHash();
   window.addEventListener("hashchange", openHash);
