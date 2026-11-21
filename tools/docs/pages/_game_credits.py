@@ -15,8 +15,9 @@ PATH = "game/credits"
 S = {
     "de": {
         "cr_keywords": "credits danksagung mitwirkende team heart soul expansion abspann",
-        "cr_lead": "Pokémon Origin Jade steht auf einer Kette von Projekten und auf der Arbeit vieler Menschen. "
-                   "Hier stehen sie – so, wie das Spiel und seine Projektunterlagen sie nennen.",
+        "cr_lead": "Wer Pokémon Origin Jade macht und auf welchen Projekten es aufbaut.",
+        "cr_sec_team": "Origin Jade",
+        "cr_team_intro": "Pokémon Origin Jade ist ein Projekt von:",
         "cr_sec_chain": "Worauf Origin Jade aufbaut",
         "cr_chain_hns_t": "Pokémon Heart & Soul",
         "cr_chain_hns": "Version {ver} vom HnS-Team – die direkte Grundlage von Origin Jade. Johto stammt von dort.",
@@ -47,8 +48,9 @@ S = {
     },
     "en": {
         "cr_keywords": "credits thanks contributors team heart soul expansion",
-        "cr_lead": "Pokémon Origin Jade stands on a chain of projects and on the work of many people. Here they "
-                   "are – as the game and its project papers name them.",
+        "cr_lead": "Who makes Pokémon Origin Jade and which projects it is built on.",
+        "cr_sec_team": "Origin Jade",
+        "cr_team_intro": "Pokémon Origin Jade is a project by:",
         "cr_sec_chain": "What Origin Jade is built on",
         "cr_chain_hns_t": "Pokémon Heart & Soul",
         "cr_chain_hns": "Version {ver} by the HnS team – the direct base of Origin Jade. Johto comes from it.",
@@ -92,10 +94,14 @@ def _names(names):
     return "<p>%s</p>" % " · ".join(H.esc(n) for n in names)
 
 
+# the people behind Origin Jade, as they want to be named
+TEAM = ("xMyDayyy", "PekingEnte3")
+
+
 def render(ctx):
     t = ctx.t
     ctx.begin(PATH)
-    body = []
+    body = [H.section(t("cr_sec_team"), H.ul([H.esc(n) for n in TEAM]), id="team", intro=H.esc(t("cr_team_intro")))]
 
     # ---- the chain of projects (README)
     chain = K.chain()
@@ -114,8 +120,13 @@ def render(ctx):
              for _name, key in CHAIN]
     body.append(H.section(t("cr_sec_chain"), H.grid(cards, "m") + H.callout(ctx, "note", U.p(ctx, "cr_chain_ask")),
                           id="projects"))
-    ctx.todo("game/credits: the Origin Jade team (names and roles) is not stated anywhere in the repository; "
-             "the page lists the base projects, the game's credits roll and the contributors file only.")
+    # The credits roll and the contributors file of the game still describe the base project;
+    # they are shown again once the game has its own (render_base below).
+    ctx.end("".join(body), lead=H.esc(t("cr_lead")), description=t("cr_lead"))
+
+
+def render_base(ctx, body):
+    t = ctx.t
 
     # ---- the credits roll of the game
     roll = [(head, names) for head, names in K.roll() if names]

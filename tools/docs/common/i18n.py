@@ -194,6 +194,7 @@ SITEMAP = {
     "game/settings": ("game", 30, "Einstellungen & Spielmodi", "Settings & game modes"),
     "game/levels": ("game", 40, "Level- & EP-System", "Level & EXP system"),
     "game/changelog": ("game", 50, "Updates", "Updates"),
+    "game/credits": ("game", 60, "Credits", "Credits"),
     "pokedex/index": ("pokedex", 10, "Pokédex", "Pokédex", "Alle Pokémon", "All Pokémon"),
     "world/index": ("world", 10, "Welt", "World", "Übersicht", "Overview"),
     "world/kanto": ("world", 20, "Kanto", "Kanto"),

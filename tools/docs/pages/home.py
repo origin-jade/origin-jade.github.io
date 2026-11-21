@@ -14,6 +14,15 @@ STRINGS = {
         "keywords": "start übersicht origin jade doku",
         "fact_species": "Pokémon", "fact_move": "Attacken", "fact_ability": "Fähigkeiten",
         "fact_item": "Items", "fact_location": "Orte", "fact_trainer": "Trainer",
+        "sec_about": "Über Origin Jade",
+        "about": "Pokémon Origin Jade ist ein ROM-Hack für den Game Boy Advance: eine Reise durch drei Regionen "
+                 "mit einem Spielstand und einem Team. Kanto kommt im Stil von Feuerrot und Blattgrün, Johto stammt "
+                 "aus Pokémon Heart & Soul, Hoenn aus Smaragd.",
+        "about_1": "Drei Regionen hintereinander, jede mit eigenen Orden, eigener Liga und eigenem Titel",
+        "about_2": "Spielfigur auf dem Figurenrad wählen",
+        "about_3": "Herausforderungen für ein neues Spiel: Nuzlocke, Zufallsmodus, Level-Limit und mehr",
+        "about_4": "VMs musst du keinem Pokémon beibringen",
+        "about_credits": "Wer dahintersteht: {credits}",
         "sec_journey": "Die Reise",
         "journey_intro": "Jede Region hat ihre eigenen Orden, ihre eigene Liga und ihren eigenen Titel. "
                          "Der Abspann läuft erst am Ende der ganzen Reise.",
@@ -44,6 +53,15 @@ STRINGS = {
         "keywords": "home overview origin jade guide",
         "fact_species": "Pokémon", "fact_move": "moves", "fact_ability": "abilities",
         "fact_item": "items", "fact_location": "places", "fact_trainer": "trainers",
+        "sec_about": "About Origin Jade",
+        "about": "Pokémon Origin Jade is a ROM hack for the Game Boy Advance: one journey through three regions "
+                 "with one save file and one team. Kanto comes in the style of FireRed and LeafGreen, Johto is from "
+                 "Pokémon Heart & Soul, Hoenn from Emerald.",
+        "about_1": "Three regions in a row, each with its own badges, League and title",
+        "about_2": "Choose your character on the character wheel",
+        "about_3": "Challenges for a new game: Nuzlocke, randomizer, level caps and more",
+        "about_4": "You do not have to teach HMs to any Pokémon",
+        "about_credits": "Who is behind it: {credits}",
         "sec_journey": "The journey",
         "journey_intro": "Every region has its own badges, its own League and its own title. "
                          "The credits only roll at the end of the whole journey.",
@@ -140,6 +158,10 @@ def render(ctx):
     t = ctx.t
     ctx.begin("index")
     body = [_hero(ctx)]
+    about = H.p(t("about")) + H.ul([H.esc(t("about_%d" % i)) for i in (1, 2, 3, 4)])
+    if ctx.url("game/credits"):
+        about += "<p>%s</p>" % H.esc(t("about_credits")).replace("{credits}", H.page_link(ctx, "game/credits"))
+    body.append(H.section(t("sec_about"), H.prose(about), id="about"))
     body.append(H.section(t("sec_journey"), _journey(ctx), id="journey", intro=H.esc(t("journey_intro"))))
     quick = [H.page_tile(ctx, path, t(key)) for path, key in QUICK]
     quick = [q for q in quick if q]
