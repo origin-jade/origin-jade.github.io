@@ -382,6 +382,8 @@ def filter_bar(ctx, target, *, text=True, facets=(), placeholder=None, label=Non
     get their attributes from H.filter_attrs. A [data-group] ancestor is
     hidden while none of its items is shown.
     facets  [{"key": "type", "label": "Typ", "options": [(value, label)], "style": "select"|"chips"}]
+            a select option may be (value, label, region): it is only offered while that region
+            is chosen in the region facet, or none
             style default: chips up to 6 options, otherwise a select box
     Hidden without JavaScript (the list is simply complete then). The state is
     kept in the URL (?q=...&type=fire), so filtered lists can be linked.
@@ -398,8 +400,9 @@ def filter_bar(ctx, target, *, text=True, facets=(), placeholder=None, label=Non
         if style == "select":
             o.append('<label class="filter-sel"><span>%s</span><select name="%s"><option value="">%s</option>%s'
                      '</select></label>' % (esc(f["label"]), esc(f["key"]), esc(ctx.ui("filter_all")),
-                                            "".join('<option value="%s">%s</option>' % (esc(v), esc(l))
-                                                    for v, l in opts)))
+                                            "".join('<option value="%s"%s>%s</option>'
+                                                    % (esc(o_[0]), ' data-region="%s"' % esc(o_[2])
+                                                       if len(o_) > 2 else "", esc(o_[1])) for o_ in opts)))
         else:
             o.append('<fieldset class="filter-chips" data-key="%s"><legend>%s</legend>%s</fieldset>'
                      % (esc(f["key"]), esc(f["label"]),

@@ -161,7 +161,7 @@ def render_trainers(ctx):
         ckey = slugs.anchor(cname) or "x"
         pkey = slugs.anchor(place) or "x"
         classes.setdefault(ckey, cname)
-        places.setdefault(pkey, (place, region))
+        places.setdefault(pkey, (place, V.REGION_KEY.get(region, "other")))
         href = None
         for e in [h] + list(es):
             href = ctx.url_for("trainer", e.const)
@@ -178,11 +178,10 @@ def render_trainers(ctx):
         link = '<a href="%s">%s</a>' % (H.esc(href), H.esc(name)) if href else H.esc(name)
         items.append(([link, H.esc(cname), H.esc(place),
                        H.esc(ctx.level_range(min(first_top, top), top)), ctx.num(n) if n > 1 else None], data))
-    copts = sorted(classes.items(), key=lambda kv: search.fold(kv[1]))
-    popts = [(k, v[0]) for k, v in places.items()]
+    # the places follow the region chosen first (option attribute data-region)
+    popts = [(k, v[0], v[1]) for k, v in places.items()]
     bar = H.filter_bar(ctx, "trainers", placeholder=t("trainers_placeholder"), facets=[
         H.region_facet(ctx),
-        {"key": "cls", "label": t("facet_class"), "options": copts, "style": "select"},
         {"key": "loc", "label": ctx.ui("location"), "options": popts, "style": "select"},
     ])
     body = bar + H.table([(ctx.ui("trainer"), "main"), t("col_class"), ctx.ui("location"),
@@ -196,5 +195,4 @@ def render_trainers(ctx):
                                       chips=[H.chip(V.version_label(ctx, es, i), "jade")] if len(es) > 1 else [])
                 cards.append(c)
         body += H.section(t("sec_orphans"), H.trainer_list(cards), id="more-teams", intro=H.esc(t("orphans_intro")))
-    ctx.end(body, lead=H.esc(t("lead_trainers", n=ctx.num(n_persons), b=ctx.num(n_battles))), wide=True,
-            prev="battles/rematches")
+    ctx.end(body, lead=H.esc(t("lead_trainers", n=ctx.num(n_persons), b=ctx.num(n_battles))), wide=True)

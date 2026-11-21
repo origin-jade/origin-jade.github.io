@@ -89,8 +89,7 @@ S = {
         "st_a_rematch": "Über das PokéCom. Besiegte Trainer tragen sich ein und rufen an, sobald du in ihrer Region "
                         "{badges} Orden hast. Einen {seeker} gibt es nicht. Die Arenaleiter von Kanto forderst du "
                         "nach dem Titel in Kanto direkt in ihrer Arena erneut heraus.",
-        "st_a_rematch_2": "Die Level der Rückkämpfe wachsen mit deinen Orden und Titeln mit; die Tabelle steht unter "
-                          "{levels}. Wenn dich die Anrufe stören, schalte sie in den Optionen unter „{opt}“ ab.",
+        "st_a_rematch_2": "Wenn dich die Anrufe stören, schalte sie in den Optionen unter „{opt}“ ab.",
         "st_q_share": "Was macht der EP-Teiler?",
         "st_a_share": "Der {share} liegt ab Spielstart eingeschaltet im Beutel. Ist er an, geht die Hälfte der "
                       "Erfahrung an die Pokémon, die gekämpft haben, die andere Hälfte wird auf das ganze Team "
@@ -214,8 +213,7 @@ S = {
         "st_a_rematch": "Through the Pokégear. Trainers you beat register themselves and call once you have {badges} "
                         "Badges in their region. There is no {seeker}. The Kanto Gym Leaders can be challenged again "
                         "right in their Gyms after the title in Kanto.",
-        "st_a_rematch_2": "Rematch levels grow with your Badges and titles; the table is under {levels}. If the "
-                          "calls bother you, turn them off in the options under “{opt}”.",
+        "st_a_rematch_2": "If the calls bother you, turn them off in the options under “{opt}”.",
         "st_q_share": "What does the Exp. Share do?",
         "st_a_share": "The {share} is in your Bag, switched on, from the start. While it is on, half of the "
                       "experience goes to the Pokémon that fought and the other half is spread over the whole "
@@ -360,7 +358,6 @@ def _faq(ctx):
     vermilion, olivine = U.place(ctx, "VermilionCity_PortInside_Frlg"), U.place(ctx, "OlivineCity_PortInside_hns")
     slateport, lilycove = U.place(ctx, "MAP_SLATEPORT_CITY_HARBOR"), U.place(ctx, "MAP_LILYCOVE_CITY_HARBOR")
     troy = H.esc(j2h["troy"])
-    levels_link = U.page(ctx, "game/levels")
     settings_link = U.page(ctx, "game/settings")
 
     def more(key, path, name):
@@ -403,12 +400,10 @@ def _faq(ctx):
     play = [
         (t("st_q_rematch"),
          U.p(ctx, "st_a_rematch", badges=F.C("OW_REMATCH_BADGE_COUNT"), seeker=H.esc(U.item_obj(ctx, "ITEM_VS_SEEKER").name))
-         + U.p(ctx, "st_a_rematch_2", levels=U.anchor_link(ctx, "game/levels", "rematches",
-                                                           ctx.title_of("page", "game/levels") or ""),
+         + U.p(ctx, "st_a_rematch_2",
                opt=H.esc(X.option(ctx, OPTION_CALLS).name))),
         (t("st_q_share"), U.p(ctx, "st_a_share", share=U.item(ctx, "ITEM_EXP_SHARE"))),
         (t("st_q_hm"), U.p(ctx, "st_a_hm") + U.p(ctx, "st_a_hm_2")),
-        (t("st_q_levels"), U.p(ctx, "st_a_levels", levels=levels_link)),
         (t("st_q_dex"), U.p(ctx, "st_a_dex", oak_lab=lab, rewards="; ".join(rewards))
          + more("st_a_dex_2", "guides/completion", "completion")),
     ]

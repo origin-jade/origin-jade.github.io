@@ -425,7 +425,7 @@ STRINGS = {
     },
 }
 
-PAGES = (I.INDEX, G.PATHS["Kanto"], G.PATHS["Johto"], G.PATHS["Hoenn"], S.PATH, R.PATH, I.TRAINERS)
+PAGES = (I.TRAINERS,)
 
 
 def register(ctx):
@@ -434,11 +434,6 @@ def register(ctx):
 
 
 def render(ctx):
-    I.render_index(ctx)
-    for region in V.REGIONS:
-        G.render_region(ctx, region)
-    S.render(ctx)
-    R.render(ctx)
     I.render_trainers(ctx)
     for const, species in V.missing_species():
         ctx.todo("battles: %s fields %s, which this build does not contain (left out of the team)"
