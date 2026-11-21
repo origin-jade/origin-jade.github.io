@@ -182,12 +182,10 @@ def render_trainers(ctx):
                 role_by_const[e.const] = role
     items, classes, places, orphans = [], {}, {}, []
     place_rank = {}
+    listed = set()
     for es, _region, _top, _n in rows:
+        # the rival exists once per starter: one row per place stands for all of them
         name = V.person_name(ctx, es)
-        if name == t("rival_name") and S._is_rival_variant(es):
-            ssp = V.starter_species(ctx, es)
-            if ssp is not None:
-                name = t("rival_variant", name=name, species=ssp.name)
         person_roles = set(roles.get(id(es), "").split())
         # one row per place: a person met in several places is listed at each of them
         parts = {}
@@ -229,6 +227,10 @@ def render_trainers(ctx):
                    min(D.first_step(e) for e in part), len(items))
             place_rank[(key[0], place)] = min(place_rank.get((key[0], place), D.map_rank(h.map_id)),
                                               D.map_rank(h.map_id))
+            same = (name, cname, place)
+            if same in listed:
+                continue
+            listed.add(same)
             items.append(([pic, link, H.esc(cname), H.esc(place)], data, key))
         if orphan:
             orphans.append(es)
@@ -252,4 +254,4 @@ def render_trainers(ctx):
                                       chips=[H.chip(V.version_label(ctx, es, i), "jade")] if len(es) > 1 else [])
                 cards.append(c)
         body += H.section(t("sec_orphans"), H.trainer_list(cards), id="more-teams", intro=H.esc(t("orphans_intro")))
-    ctx.end(body, lead=H.esc(t("lead_trainers", n=ctx.num(n_persons), b=ctx.num(n_battles))), wide=True)
+    ctx.end(body, lead=H.esc(t("lead_trainers")), wide=True)

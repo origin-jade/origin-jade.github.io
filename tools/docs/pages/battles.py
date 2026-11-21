@@ -131,8 +131,7 @@ STRINGS = {
         "col_last_gym": "Achte Arena",
         "col_champ": "Champ",
         # ---- trainers
-        "lead_trainers": "Alle {n} Trainer mit ihren {b} Kämpfen. Ein Klick führt zum Team auf der Seite des "
-                         "Ortes, an dem der Kampf stattfindet.",
+        "lead_trainers": "Alle Trainer des Spiels, je einmal pro Ort, an dem du sie triffst. Ein Klick führt zum Team auf der Seite des Ortes.",
         "facet_role": "Bosse", "role_leader": "Arenaleiter", "role_elite": "Top Vier", "role_champion": "Champ", "role_rival": "Rivalen",
         "trainers_placeholder": "Name, Klasse oder Ort",
         "facet_class": "Klasse",
@@ -331,8 +330,7 @@ STRINGS = {
         "col_last_gym": "Eighth Gym",
         "col_champ": "Champion",
         # ---- trainers
-        "lead_trainers": "All {n} Trainers with their {b} battles. A click takes you to the team on the page of "
-                         "the place where the battle happens.",
+        "lead_trainers": "Every Trainer in the game, once for each place where you meet them. A click takes you to the team on the page of that place.",
         "facet_role": "Bosses", "role_leader": "Gym Leaders", "role_elite": "Elite Four", "role_champion": "Champions", "role_rival": "Rivals",
         "trainers_placeholder": "Name, class or place",
         "facet_class": "Class",
