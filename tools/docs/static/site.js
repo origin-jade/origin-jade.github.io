@@ -495,7 +495,7 @@
   }).filter(Boolean);
   /* ---- section tabs: the main sections of a page, one at a time ---- */
   var secTabs = (function () {
-    var body = $("body:not(.home) .page-body");
+    var body = $("body:not(.home):not(.no-tabs) .page-body");
     if (!body) return null;
     var secs = $$(".sec", body).filter(function (s) {
       return s.parentNode === body && s.id && s.firstElementChild && s.firstElementChild.tagName === "H2";

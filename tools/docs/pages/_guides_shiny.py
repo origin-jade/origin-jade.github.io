@@ -185,4 +185,4 @@ def render(ctx):
     out.append(H.section(t("sh_sec_alt"), H.grid(cards, "s"), id="alternate",
                          intro=H.esc(t("sh_alt_intro", n=len(alt), option=color.name, tab=color.tab,
                                        on=color.choices[1]))))
-    ctx.end("".join(out), lead=H.esc(t("sh_lead", n=len(alt))))
+    ctx.end("".join(out), lead=H.esc(t("sh_lead", n=len(alt))), outline=False, cls="no-tabs")
