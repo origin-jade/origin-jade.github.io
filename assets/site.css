@@ -609,7 +609,7 @@ a.ent:hover { background: var(--jade-tint); box-shadow: none; }
 .rmap { margin: 0; flex: 1 1 18rem; max-width: 30rem; }
 .rmap-box { position: relative; line-height: 0; border: 1px solid var(--line); }
 .rmap-box img { display: block; width: 100%; height: auto; max-width: none; }
-.rmap-box i { position: absolute; width: 3.3334%; height: 5%; background: #ff3b30; box-shadow: 0 0 0 1px #fff inset; animation: rmap-blink 1.2s steps(2, jump-none) infinite; }
+.rmap-box i { position: absolute; width: 3.3334%; height: 5%; border-radius: 12.5%; background: #ff3b30; box-shadow: 0 0 0 1px #fff inset; animation: rmap-blink 1.2s steps(2, jump-none) infinite; }
 .rmap figcaption { margin-top: .35rem; font-size: .875rem; font-weight: 650; color: var(--muted); }
 @keyframes rmap-blink { from { opacity: .9; } to { opacity: .15; } }
 .sectabs { margin: 0 0 1.25rem; }
