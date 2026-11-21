@@ -3307,7 +3307,6 @@ window.OJ_SEARCH={lang:"en",kinds:["species", "move", "ability", "item", "locati
 ["Berries",6,"data/berries.html"],
 ["Moves",6,"data/moves/index.html"],
 ["Pokédex",6,"pokedex/index.html"],
-["Type chart",6,"data/typechart.html","types effectiveness weaknesses resistances immunity super effective"],
 ["World",6,"world/index.html"],
 ["Kanto",6,"world/kanto.html"],
 ["Johto",6,"world/johto.html"],

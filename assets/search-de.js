@@ -3307,7 +3307,6 @@ window.OJ_SEARCH={lang:"de",kinds:["species", "move", "ability", "item", "locati
 ["Beeren",6,"data/berries.html"],
 ["Attacken",6,"data/moves/index.html"],
 ["Pokédex",6,"pokedex/index.html"],
-["Typen-Tabelle",6,"data/typechart.html","typen effektivität schwächen resistenzen immunität sehr effektiv"],
 ["Welt",6,"world/index.html"],
 ["Kanto",6,"world/kanto.html"],
 ["Johto",6,"world/johto.html"],
