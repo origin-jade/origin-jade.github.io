@@ -297,6 +297,7 @@ a.mon-link span, a.item-link span { text-decoration: underline; text-decoration-
 .tbl td.main { font-weight: 620; }
 .tbl-enc { table-layout: fixed; }
 .tbl-enc th:nth-child(1) { width: 36%; } .tbl-enc th:nth-child(2) { width: 30%; } .tbl-enc th:nth-child(3) { width: 14%; } .tbl-enc th:nth-child(4) { width: 20%; }
+.tbl-enc-t th:nth-child(1) { width: 30%; } .tbl-enc-t th:nth-child(2) { width: 15%; } .tbl-enc-t th:nth-child(3) { width: 24%; } .tbl-enc-t th:nth-child(4) { width: 13%; } .tbl-enc-t th:nth-child(5) { width: 18%; }
 .rate { display: inline-flex; align-items: center; gap: .5rem; white-space: nowrap; }
 @media (max-width: 40rem) {
   .tbl-stack, .tbl-stack tbody { display: block; }
@@ -318,6 +319,10 @@ a.mon-link span, a.item-link span { text-decoration: underline; text-decoration-
   .tbl-enc td.main, .tbl-shop td.main { grid-column: auto; font-size: .9375rem; }
   .tbl-enc td[data-l]::before, .tbl-shop td[data-l]::before { display: none; }
   .tbl-enc .meter { width: 2.25rem; }
+  .tbl-enc-t tr { grid-template-columns: minmax(0, 1fr) auto auto auto; column-gap: .5rem; }
+  .tbl-enc-t .tod { padding: .05rem .35rem; font-size: .75rem; }
+  .tbl-enc-t .meter { display: none; }
+  .tbl-enc-t td:last-child { min-width: 3.4rem; text-align: right; }
 }
 
 /* ------------------------------------------------------------------ 9 components */
