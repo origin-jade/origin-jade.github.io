@@ -212,7 +212,6 @@ SITEMAP = {
     "data/items/index": ("data", 30, "Items", "Items"),
     "data/tms": ("data", 40, "TMs & VMs", "TMs & HMs"),
     "data/berries": ("data", 50, "Beeren", "Berries"),
-    "data/typechart": ("data", 60, "Typen-Tabelle", "Type chart"),
     "guides/breeding": ("guides", 10, "Zucht", "Breeding"),
     "guides/shiny": ("guides", 20, "Schillernde Pokémon", "Shiny Pokémon"),
     "guides/legendaries": ("guides", 30, "Legendäre Pokémon", "Legendary Pokémon"),
