@@ -61,7 +61,8 @@ def roll():
 @functools.lru_cache(maxsize=None)
 def chain():
     src = F.raw("README.md")
-    sec = src[src.index("## Credits"):]
+    sec = src[src.index("# Credits"):]
+    sec = sec[sec.index("Origin Jade stands on a chain of projects"):]
     out = []
     for proj, author, url, rest in re.findall(
             r"^- \*\*(.+?)\*\*(?: \(([^)]*)\))?[^\[]*?\[[^\]]*\]\(([^)]+)\)[,.]?(.*?)(?=^- |\n\n)", sec, re.M | re.S):

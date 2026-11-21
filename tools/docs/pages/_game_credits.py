@@ -17,6 +17,7 @@ S = {
         "cr_keywords": "credits danksagung mitwirkende team heart soul expansion abspann",
         "cr_lead": "Wer Pokémon Origin Jade macht und auf welchen Projekten es aufbaut.",
         "cr_sec_team": "Origin Jade",
+        "cr_team_pe": "Grafiken, darunter das Titelbild, und diese Doku-Website",
         "cr_team_intro": "Pokémon Origin Jade ist ein Projekt von:",
         "cr_sec_chain": "Worauf Origin Jade aufbaut",
         "cr_chain_hns_t": "Pokémon Heart & Soul",
@@ -50,6 +51,7 @@ S = {
         "cr_keywords": "credits thanks contributors team heart soul expansion",
         "cr_lead": "Who makes Pokémon Origin Jade and which projects it is built on.",
         "cr_sec_team": "Origin Jade",
+        "cr_team_pe": "graphics, including the title screen artwork, and this documentation website",
         "cr_team_intro": "Pokémon Origin Jade is a project by:",
         "cr_sec_chain": "What Origin Jade is built on",
         "cr_chain_hns_t": "Pokémon Heart & Soul",
@@ -95,13 +97,13 @@ def _names(names):
 
 
 # the people behind Origin Jade, as they want to be named
-TEAM = ("xMyDayyy", "PekingEnte3")
+TEAM = (("xMyDayyy", None), ("PekingEnte", "cr_team_pe"))
 
 
 def render(ctx):
     t = ctx.t
     ctx.begin(PATH)
-    body = [H.section(t("cr_sec_team"), H.ul([H.esc(n) for n in TEAM]), id="team", intro=H.esc(t("cr_team_intro")))]
+    body = [H.section(t("cr_sec_team"), H.ul([H.esc(n) + (" – " + H.esc(t(k)) if k else "") for n, k in TEAM]), id="team", intro=H.esc(t("cr_team_intro")))]
 
     # ---- the chain of projects (README)
     chain = K.chain()
@@ -113,7 +115,9 @@ def render(ctx):
     F.require("README.md", r"\*\*Modern Emerald\*\* by resetes12")
     F.require("README.md", r"\*\*pokeemerald-expansion\*\* by RHH \(Rom Hacking Hideout\)")
     F.require("README.md", r"\*\*pokeemerald\*\* by pret")
-    F.require("README.md", r"Johto comes from Pokémon Heart & Soul")
+    F.require("README.md", r"\*\*Johto\*\* from Pokémon Heart & Soul")
+    F.require("README.md", r"\*\*PekingEnte\*\*: graphics, including the title screen artwork, and the\s+"
+                           r"documentation website")
     F.require("README.md", r"If you use it, credit Origin\s+Jade and keep the full chain")
     fmt = {"hns": {"ver": H.esc(hns)}, "rhh": {"ver": H.esc(rhh.group(1)), "fix": H.esc(rhh.group(2))}}
     cards = [H.card("<p>%s</p>" % U.fmt(ctx, "cr_chain_" + key, **fmt.get(key, {})), title=t("cr_chain_%s_t" % key))
