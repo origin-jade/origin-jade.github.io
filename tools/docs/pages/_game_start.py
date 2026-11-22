@@ -81,6 +81,10 @@ S = {
                         "steht die {birth} im Fahrplan der Schiffe.",
         "st_a_tickets_2": "{eon}, {mystic} und {oldmap} bekommst du im Spiel nicht. Die {frontier} erscheint im "
                           "Fahrplan erst nach dem Titel in Hoenn.",
+        "st_q_map": "Wie wechsle ich auf der Karte zwischen den Regionen?",
+        "st_a_map": "Die Karte im PokéCom zeigt Kanto und Johto zusammen. Sobald du in Hoenn warst, wechselst du mit Select zur Hoenn-Karte und zurück – oder indem du am unteren Rand weiter nach unten bzw. auf der Hoenn-Karte am oberen Rand weiter nach oben gehst.",
+        "st_q_rival_hoenn": "Wer ist mein Rivale in Hoenn?",
+        "st_a_rival_hoenn": "Maike – oder Brix, wenn du selbst Maike spielst.",
         "st_q_stars": "Was bedeuten die Sterne auf dem Trainerpass?",
         "st_a_stars": "Es gibt je einen Stern für den Titel in Kanto, Johto und Hoenn und einen für den Sieg über "
                       "{red}.",
@@ -206,6 +210,10 @@ S = {
                         "{birth} on the ships' timetable.",
         "st_a_tickets_2": "You cannot get the {eon}, the {mystic} or the {oldmap} in the game. The {frontier} only "
                           "appears on the timetable after the title in Hoenn.",
+        "st_q_map": "How do I switch between the regions on the map?",
+        "st_a_map": "The PokéGear map shows Kanto and Johto together. Once you have been to Hoenn, press Select to switch to the Hoenn map and back – or move further down at the bottom edge, and further up at the top edge of the Hoenn map.",
+        "st_q_rival_hoenn": "Who is my rival in Hoenn?",
+        "st_a_rival_hoenn": "May – or Brendan if you play as May yourself.",
         "st_q_stars": "What do the stars on the Trainer Card mean?",
         "st_a_stars": "There is one star each for the title in Kanto, Johto and Hoenn, and one for beating {red}.",
 
@@ -388,6 +396,14 @@ def _faq(ctx):
     if len(stars) != 4 or [s.kind for s in stars].count("trainer") != 1 or stars[-1].kind != "trainer":
         raise F.TU.DataError("Trainer Card stars changed: review the FAQ")
     story.append((t("st_q_stars"), U.p(ctx, "st_a_stars", red=U.trainer(ctx, stars[-1].const))))
+    # map switch and Hoenn rival as the code handles them
+    F.require("src/region_map.c", r"if \(hoennKnown && JOY_NEW\(SELECT_BUTTON\)\)")
+    F.require("src/region_map.c", r"JOY_HELD\(DPAD_DOWN\) && sRegionMap->cursorPosY >= MAPCURSOR_Y_MAX")
+    F.require("src/region_map.c", r"JOY_HELD\(DPAD_UP\) && sRegionMap->cursorPosY <= MAPCURSOR_Y_MIN")
+    story.append((t("st_q_map"), U.p(ctx, "st_a_map")))
+    F.require("src/player_character.c",
+              r"bool8 IsHoennRivalBrendan\(void\)\s*\{\s*return GetPlayerCharacter\(\) == PLAYER_CHARACTER_MAY;")
+    story.append((t("st_q_rival_hoenn"), U.p(ctx, "st_a_rival_hoenn")))
 
     # ---- gameplay
     rewards = []
