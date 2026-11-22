@@ -401,7 +401,6 @@ def _faq(ctx):
     story.append((t("st_q_map"), U.p(ctx, "st_a_map")))
     F.require("src/player_character.c",
               r"bool8 IsHoennRivalBrendan\(void\)\s*\{\s*return GetPlayerCharacter\(\) == PLAYER_CHARACTER_MAY;")
-    story.append((t("st_q_rival_hoenn"), U.p(ctx, "st_a_rival_hoenn")))
 
     # ---- gameplay
     rewards = []
@@ -449,8 +448,6 @@ def _faq(ctx):
     pc_entry = X.pc_entry(ctx)
     settings = [
         (t("st_q_change"), U.p(ctx, "st_a_change", pc=U.quote(ctx, pc_entry), settings=settings_link)),
-        (t("st_q_time"), U.p(ctx, "st_a_time", d=H.esc(X.hours_text(ctx, (X.day_hours()[0][0], X.day_hours()[2][1]))),
-                             n=hours[3])),
         (t("st_q_clock"), U.p(ctx, "st_a_clock", rtc=H.esc(rtc.name), fake=H.esc(rtc.choices[1].name),
                               speed=H.esc(speed.name)) + _choice_list(speed) + U.p(ctx, "st_a_clock_2")),
         (t("st_q_nuzlocke"), U.p(ctx, "st_a_nuzlocke") + _choice_list(nuz)),
