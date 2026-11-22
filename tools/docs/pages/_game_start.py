@@ -374,7 +374,6 @@ def _faq(ctx):
 
     # ---- story and regions
     story = [
-        (t("st_q_order"), U.p(ctx, "st_a_order")),
         (t("st_q_johto"),
          U.p(ctx, "st_a_johto", oak_lab=lab, gs_ball=U.item(ctx, "ITEM_GS_BALL"), route22=U.place(ctx, "MAP_ROUTE22"),
              route26=U.place(ctx, "MAP_ROUTE26NORTH_HNS"), elm_town=U.place(ctx, "NewBarkTown_Lab_hns"))
@@ -395,7 +394,6 @@ def _faq(ctx):
     stars = HC.stars()
     if len(stars) != 4 or [s.kind for s in stars].count("trainer") != 1 or stars[-1].kind != "trainer":
         raise F.TU.DataError("Trainer Card stars changed: review the FAQ")
-    story.append((t("st_q_stars"), U.p(ctx, "st_a_stars", red=U.trainer(ctx, stars[-1].const))))
     # map switch and Hoenn rival as the code handles them
     F.require("src/region_map.c", r"if \(hoennKnown && JOY_NEW\(SELECT_BUTTON\)\)")
     F.require("src/region_map.c", r"JOY_HELD\(DPAD_DOWN\) && sRegionMap->cursorPosY >= MAPCURSOR_Y_MAX")
@@ -438,14 +436,8 @@ def _faq(ctx):
         raise F.TU.DataError("the Shiny Charm is no longer the Johto Pokédex reward: review the FAQ")
     mints = X.challenge(ctx, "TAB_MODE", "ITEM_MODE_MINTS")
     pokemon = [
-        (t("st_q_daycare"), U.p(ctx, "st_a_daycare", places=places, oval=U.item(ctx, "ITEM_OVAL_CHARM"))
-         + more("st_a_daycare_2", "guides/breeding", "breeding")),
         (t("st_q_legend"), U.p(ctx, "st_a_legend", days=F.C("FLEE_COOLDOWN_DAYS", "src/legendaries_oj.c"))
          + more("st_a_legend_2", "guides/legendaries", "legendaries")),
-        (t("st_q_shiny"),
-         U.p(ctx, "st_a_shiny", odds=H.esc(ctx.num(65536 // odds[0])), opt=H.esc(shiny_opt.name),
-             choices=X.choices_line(ctx, shiny_opt), charm=U.item(ctx, "ITEM_SHINY_CHARM"), rolls=WS.charm_rolls())
-         + more("st_a_shiny_2", "guides/shiny", "shiny")),
         (t("st_q_mints"), U.p(ctx, "st_a_mints", opt=H.esc(mints.name)) + _choice_list(mints)),
     ]
 
@@ -465,11 +457,7 @@ def _faq(ctx):
         (t("st_q_random"), U.p(ctx, "st_a_random")),
     ]
 
-    # ---- save file
-    msg = F.c_string("src/main_menu.c", "gText_SaveFileOutdated", lang)
-    tech = [(t("st_q_saves"), U.p(ctx, "st_a_saves", msg=U.quote(ctx, msg)) + U.p(ctx, "st_a_saves_2"))]
-
-    groups = (("story", story), ("play", play), ("pokemon", pokemon), ("settings", settings), ("tech", tech))
+    groups = (("story", story), ("play", play), ("pokemon", pokemon), ("settings", settings))
     return "".join(H.sub(t("st_g_" + key), U.faq(items), id="faq-" + key) for key, items in groups)
 
 
