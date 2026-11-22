@@ -63,28 +63,30 @@ S = {
         "st_q_order": "In welcher Reihenfolge spiele ich die Regionen?",
         "st_a_order": "Kanto, dann Johto, dann Hoenn – alles in einem Spielstand. Jede Region hat eigene Orden, eine "
                       "eigene Liga und einen eigenen Titel. Der Abspann läuft nach dem ersten Titel in Hoenn.",
-        "st_q_johto": "Wie komme ich von Kanto nach Johto?",
-        "st_a_johto": "Werde Champ von Kanto. Danach bittet dich Prof. Eich in sein Labor in {oak_lab} und gibt dir "
-                      "den {gs_ball}. Erst dann lässt dich die Wache im Tor am Ende von {route22} durch; von dort "
-                      "geht es über {route26} nach {elm_town}, wo Prof. Lind den {gs_ball} entgegennimmt.",
+        "st_q_johto": "Die Wache am Tor von Route 22 lässt mich nicht nach Johto – warum?",
+        "st_a_johto": "Der Weg öffnet sich erst nach dem Titel in Kanto. Danach bittet dich Prof. Eich in sein Labor in {oak_lab} und gibt dir den {gs_ball}. Erst dann lässt dich die Wache im Tor am Ende von {route22} durch; von dort geht es über {route26} nach {elm_town}, wo Prof. Lind den {gs_ball} entgegennimmt.",
         "st_a_johto_2": "Vor dem Titel sagt die Wache: {closed} Nach dem Titel, aber ohne den Besuch bei Prof. Eich: "
                         "{oak}",
-        "st_q_hoenn": "Wie komme ich nach Hoenn?",
-        "st_a_hoenn": "Werde Champ von Johto und geh dann in Prof. Eichs Labor in {oak_lab}: Dort wartet {troy} und "
-                      "gibt dir das {ticket}. Das Schiff nach Hoenn fährt in {vermilion} und {olivine} ab. Die erste "
-                      "Fahrt endet auf {route104}, danach geht es zu Prof. Birk nach {birch}.",
+        "st_q_hoenn": "Ich bin Champ von Johto, komme aber nicht nach Hoenn – was fehlt?",
+        "st_a_hoenn": "Dir fehlt das {ticket}. Geh nach dem Titel in Prof. Eichs Labor in {oak_lab}: Dort wartet {troy} und gibt es dir. Das Schiff nach Hoenn fährt in {vermilion} und {olivine} ab. Die erste Fahrt endet auf {route104}, danach geht es zu Prof. Birk nach {birch}.",
         "st_a_hoenn_2": "Ohne Ticket sagt der Matrose: {no_ticket} Spätere Fahrten gehen direkt nach {slateport} "
                         "oder {lilycove}, sobald du dort warst.",
-        "st_q_tickets": "Welche Tickets gibt es und wo bekomme ich sie?",
-        "st_a_tickets": "{ss}: von Bill in seinem Haus ({route25}). {ticket}: von {troy} in Prof. Eichs Labor nach "
-                        "dem Titel in Johto. {aurora}: von Prof. Eich für den vollständigen Hoenn-Pokédex; damit "
-                        "steht die {birth} im Fahrplan der Schiffe.",
+        "st_q_tickets": "Die Schiffe fahren nicht zur Insel von Deoxys – wie komme ich hin?",
+        "st_a_tickets": "Du brauchst das {aurora}. Professor Eich gibt es dir in seinem Labor in {oak_lab}, sobald du alle Pokémon des Hoenn-Pokédex gefangen hast. Mit dem Ticket im Beutel bieten die Schiffe die {birth} als Ziel an.",
         "st_a_tickets_2": "{eon}, {mystic} und {oldmap} bekommst du im Spiel nicht. Die {frontier} erscheint im "
                           "Fahrplan erst nach dem Titel in Hoenn.",
         "st_q_map": "Wie wechsle ich auf der Karte zwischen den Regionen?",
         "st_a_map": "Die Karte im PokéCom zeigt Kanto und Johto zusammen. Sobald du in Hoenn warst, wechselst du mit Select zur Hoenn-Karte und zurück – oder indem du am unteren Rand weiter nach unten bzw. auf der Hoenn-Karte am oberen Rand weiter nach oben gehst.",
         "st_q_rival_hoenn": "Wer ist mein Rivale in Hoenn?",
         "st_a_rival_hoenn": "Maike – oder Brix, wenn du selbst Maike spielst.",
+        "st_a_more_legend": "Der ganze Weg steht unter {legendaries}.",
+        "st_q_leaders": "In den Arenen von Vertania City und Fuchsania City steht plötzlich jemand anderes – was ist da los?",
+        "st_a_leaders": "Die beiden Arenen wechseln im Lauf der Geschichte den Leiter: Sobald du alle acht Johto-Orden hast und den Kampf gegen {hooh} oder {lugia} hinter dir hast, übernimmt dein Rivale in {viridian} die Arena von {giovanni}, und {janine} in {fuchsia} die von {koga}.",
+        "st_a_leaders_2": "Beide kannst du beliebig oft herausfordern. Einen Orden gibt es nicht, dafür einmalig eine TM: {trick} vom Rivalen, {jab} von Janina.",
+        "st_q_regions": "Wo sind Sinjoh und die Alola-Inseln aus Heart & Soul?",
+        "st_a_regions": "Sie sind in Origin Jade nicht zugänglich, weil sie nicht zur Geschichte der Reise durch Kanto, Johto und Hoenn passen.",
+        "st_q_suicune": "Suicune läuft mir immer wieder davon – wo kann ich es fangen?",
+        "st_a_suicune": "Das gehört zur Geschichte: Du triffst {suicune} mehrmals, bevor es sich zum Kampf stellt. Fangen kannst du es erst im {tintower} (Erdgeschoss), nachdem du die Kimono-Girls besiegt hast.",
         "st_q_stars": "Was bedeuten die Sterne auf dem Trainerpass?",
         "st_a_stars": "Es gibt je einen Stern für den Titel in Kanto, Johto und Hoenn und einen für den Sieg über "
                       "{red}.",
@@ -192,28 +194,30 @@ S = {
         "st_q_order": "In which order do I play the regions?",
         "st_a_order": "Kanto, then Johto, then Hoenn – all in one save file. Every region has its own Badges, its "
                       "own League and its own title. The credits roll after the first title in Hoenn.",
-        "st_q_johto": "How do I get from Kanto to Johto?",
-        "st_a_johto": "Become Champion of Kanto. Prof. Oak then asks you to his lab in {oak_lab} and gives you the "
-                      "{gs_ball}. Only then does the guard in the gate at the end of {route22} let you through; from "
-                      "there {route26} leads to {elm_town}, where Prof. Elm takes the {gs_ball}.",
+        "st_q_johto": "The guard at the Route 22 gate will not let me through to Johto – why?",
+        "st_a_johto": "The way only opens after the title in Kanto. Then Prof. Oak asks you to his lab in {oak_lab} and gives you the {gs_ball}. Only then does the guard in the gate at the end of {route22} let you through; from there {route26} leads to {elm_town}, where Prof. Elm takes the {gs_ball}.",
         "st_a_johto_2": "Before the title the guard says: {closed} After the title, but without the visit to "
                         "Prof. Oak: {oak}",
-        "st_q_hoenn": "How do I get to Hoenn?",
-        "st_a_hoenn": "Become Champion of Johto, then go to Prof. Oak's lab in {oak_lab}: {troy} is waiting there "
-                      "and gives you the {ticket}. The ship to Hoenn leaves from {vermilion} and {olivine}. The first "
-                      "crossing ends on {route104}; from there you go to Prof. Birch in {birch}.",
+        "st_q_hoenn": "I am Champion of Johto but cannot travel to Hoenn – what is missing?",
+        "st_a_hoenn": "You are missing the {ticket}. After the title, go to Prof. Oak's lab in {oak_lab}: {troy} is waiting there and gives it to you. The ship to Hoenn leaves from {vermilion} and {olivine}. The first crossing ends on {route104}; from there you go to Prof. Birch in {birch}.",
         "st_a_hoenn_2": "Without a ticket the sailor says: {no_ticket} Later crossings go straight to {slateport} "
                         "or {lilycove} once you have been there.",
-        "st_q_tickets": "Which tickets are there and where do I get them?",
-        "st_a_tickets": "{ss}: from Bill at his house ({route25}). {ticket}: from {troy} at Prof. Oak's lab after "
-                        "the title in Johto. {aurora}: from Prof. Oak for the complete Hoenn Pokédex; it puts "
-                        "{birth} on the ships' timetable.",
+        "st_q_tickets": "The ships do not sail to Deoxys' island – how do I get there?",
+        "st_a_tickets": "You need the {aurora}. Professor Oak gives it to you in his lab in {oak_lab} once you have caught every Pokémon of the Hoenn Pokédex. With the ticket in your Bag the ships offer {birth} as a destination.",
         "st_a_tickets_2": "You cannot get the {eon}, the {mystic} or the {oldmap} in the game. The {frontier} only "
                           "appears on the timetable after the title in Hoenn.",
         "st_q_map": "How do I switch between the regions on the map?",
         "st_a_map": "The PokéGear map shows Kanto and Johto together. Once you have been to Hoenn, press Select to switch to the Hoenn map and back – or move further down at the bottom edge, and further up at the top edge of the Hoenn map.",
         "st_q_rival_hoenn": "Who is my rival in Hoenn?",
         "st_a_rival_hoenn": "May – or Brendan if you play as May yourself.",
+        "st_a_more_legend": "The whole way is described under {legendaries}.",
+        "st_q_leaders": "Suddenly someone else is in the Gyms of Viridian City and Fuchsia City – what happened?",
+        "st_a_leaders": "Both Gyms change their Leader during the story: once you have all eight Johto Badges and the battle against {hooh} or {lugia} is behind you, your rival takes over the Gym of {giovanni} in {viridian}, and {janine} that of {koga} in {fuchsia}.",
+        "st_a_leaders_2": "You can challenge both as often as you like. There is no Badge, but one TM each: {trick} from your rival, {jab} from Janine.",
+        "st_q_regions": "Where are Sinjoh and the Alola islands from Heart & Soul?",
+        "st_a_regions": "They cannot be visited in Origin Jade because they do not fit the story of the journey through Kanto, Johto and Hoenn.",
+        "st_q_suicune": "Suicune keeps running away from me – where can I catch it?",
+        "st_a_suicune": "That is part of the story: you meet {suicune} several times before it stays to battle. You can only catch it in the {tintower} (ground floor), after you have defeated the Kimono Girls.",
         "st_q_stars": "What do the stars on the Trainer Card mean?",
         "st_a_stars": "There is one star each for the title in Kanto, Johto and Hoenn, and one for beating {red}.",
 
@@ -383,14 +387,36 @@ def _faq(ctx):
              route104=U.place(ctx, "MAP_ROUTE104"), birch=U.place(ctx, "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB"))
          + U.p(ctx, "st_a_hoenn_2", no_ticket=U.quote(ctx, j2h["no_ticket"]), slateport=slateport, lilycove=lilycove)),
         (t("st_q_tickets"),
-         U.p(ctx, "st_a_tickets", ss=U.item(ctx, "ITEM_SS_TICKET"), route25=U.place(ctx, "Route25_SeaCottage_Frlg"),
-             ticket=ticket, troy=troy, aurora=U.item(ctx, "ITEM_AURORA_TICKET"),
+         U.p(ctx, "st_a_tickets", aurora=U.item(ctx, "ITEM_AURORA_TICKET"), oak_lab=lab,
              birth=U.mapsec(ctx, "MAPSEC_BIRTH_ISLAND"))
-         + U.p(ctx, "st_a_tickets_2", eon=H.esc(U.item_obj(ctx, "ITEM_EON_TICKET").name),
-               mystic=H.esc(U.item_obj(ctx, "ITEM_MYSTIC_TICKET").name),
-               oldmap=H.esc(U.item_obj(ctx, "ITEM_OLD_SEA_MAP").name),
-               frontier=U.mapsec(ctx, "MAPSEC_BATTLE_FRONTIER"))),
+         + more("st_a_more_legend", "guides/legendaries", "legendaries")),
     ]
+    if not any(const == "ITEM_AURORA_TICKET" for _check, const, _ in HC.oak_rewards()):
+        raise F.TU.DataError("the Aurora Ticket is no longer a Pokédex reward: review the FAQ")
+
+    # the gyms of Viridian City and Fuchsia City change hands (data/scripts/pokemon_league.inc)
+    F.require("data/scripts/pokemon_league.inc",
+              r"PokemonLeague_EventScript_CheckLeagueChanged::\s*specialvar VAR_RESULT, CountJohtoBadges\s*"
+              r"goto_if_lt VAR_RESULT, 8, \w+\s*goto_if_lt VAR_ECRUTEAK_CITY_THEATER, 8,")
+    for d in ("TinTower_RoofDay_hns", "WhirlIslands_LugiaChamber_hns"):
+        F.require("data/maps/%s/scripts.inc" % d, r"setvar VAR_ECRUTEAK_CITY_THEATER, 8")
+    F.require("data/maps/ViridianCity_Gym_Frlg/scripts.inc",
+              r"goto_if_eq VAR_RESULT, TRUE, ViridianCity_Gym_EventScript_SetBlueLeader")
+    F.require("data/maps/FuchsiaCity_Gym_Frlg/scripts.inc",
+              r"goto_if_eq VAR_RESULT, TRUE, FuchsiaCity_Gym_EventScript_SetJanineLeader")
+    F.require("data/maps/ViridianCity_Gym_Frlg/scripts.inc", r"FLAG_GOT_TM_TRICK_ROOM_FROM_BLUE")
+    F.require("data/maps/FuchsiaCity_Gym_Frlg/scripts.inc", r"FLAG_GOT_TM_POISON_JAB_FROM_JANINE")
+    story.append((t("st_q_leaders"),
+                  U.p(ctx, "st_a_leaders", viridian=U.place(ctx, "ViridianCity_Gym_Frlg"),
+                      fuchsia=U.place(ctx, "FuchsiaCity_Gym_Frlg"), hooh=U.species(ctx, "SPECIES_HO_OH"),
+                      lugia=U.species(ctx, "SPECIES_LUGIA"), giovanni=U.trainer(ctx, "TRAINER_LEADER_GIOVANNI"),
+                      koga=U.trainer(ctx, "TRAINER_LEADER_KOGA"), janine=U.trainer(ctx, "TRAINER_JANINE_HNS"))
+                  + U.p(ctx, "st_a_leaders_2", trick=U.move(ctx, "MOVE_TRICK_ROOM"),
+                        jab=U.move(ctx, "MOVE_POISON_JAB"))))
+    from gamedata import maps as _maps
+    if not (_maps.locked_mapsec("MAPSEC_MELEMELE_ISLAND") and _maps.locked_mapsec("MAPSEC_SINJOH_RUINS")):
+        raise F.TU.DataError("Sinjoh or Alola is no longer closed: review the FAQ")
+    story.append((t("st_q_regions"), U.p(ctx, "st_a_regions")))
     stars = HC.stars()
     if len(stars) != 4 or [s.kind for s in stars].count("trainer") != 1 or stars[-1].kind != "trainer":
         raise F.TU.DataError("Trainer Card stars changed: review the FAQ")
@@ -437,6 +463,9 @@ def _faq(ctx):
     pokemon = [
         (t("st_q_legend"), U.p(ctx, "st_a_legend", days=F.C("FLEE_COOLDOWN_DAYS", "src/legendaries_oj.c"))
          + more("st_a_legend_2", "guides/legendaries", "legendaries")),
+        (t("st_q_suicune"), U.p(ctx, "st_a_suicune", suicune=U.species(ctx, "SPECIES_SUICUNE"),
+                                tintower=U.place(ctx, "TinTower_1F_hns"))
+         + more("st_a_more_legend", "guides/legendaries", "legendaries")),
         (t("st_q_mints"), U.p(ctx, "st_a_mints", opt=H.esc(mints.name)) + _choice_list(mints)),
     ]
 

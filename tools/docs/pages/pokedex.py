@@ -854,7 +854,7 @@ def _where_section(ctx, site, sp, first, kinds):
         times = ", ".join(t("time_span", name=ctx.ui("time_" + k), hours=EVO.hours_text(ctx, *spans[k]))
                           for k in ("day", "night") if k in spans)
         show_times = any(r["times"] for r in wild)
-        body = (_area_maps(ctx, wild) + (H.p(t("where_wild_intro", times=times), "muted") if show_times else "")
+        body = (_area_maps(ctx, wild) + ""
                 + _wild_table(ctx, wild))
         held = _held_items(ctx, sp)
         if held:

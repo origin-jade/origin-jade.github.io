@@ -209,7 +209,7 @@ def wild_section(ctx, loc):
     if not out:
         return ""
     intro = ctx.t("wild_intro")
-    if used_times:
+    if False:
         hrs = WM.time_hours()
         if "TIME_DAY" in hrs and "TIME_NIGHT" in hrs:
             day = [hrs[t] for t in ("TIME_MORNING", "TIME_DAY", "TIME_EVENING") if t in hrs]
