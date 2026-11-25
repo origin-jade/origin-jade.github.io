@@ -18,6 +18,7 @@ item page and the pages of its places always agree.
 import functools
 import re
 
+from gamedata import maps
 from gamedata import dex_pickup, items as IT, locations as LOC, repo_path, species as SP, trainers
 from gamedata import trainers_items as TI
 
@@ -26,7 +27,7 @@ from pages import _world_data as D
 
 class Place:
     def __init__(self, **kw):
-        self.qty, self.count, self.price, self.badges = 1, 1, None, None
+        self.qty, self.count, self.price, self.badges, self.threshold = 1, 1, None, None, None
         self.underfoot = self.not_ball = False
         self.__dict__.update(kw)
 
@@ -55,7 +56,40 @@ def places():
     for mid, iid, cost in bp_shops():
         key = LOC.key_of_map(mid)
         if key:
-            add(iid, loc=key, map_id=mid, kind="bought", price=("bp", cost))
+            # no building: where exactly the clerk stands is left to the player
+            add(iid, loc=key, map_id=None, kind="bp", price=("bp", cost))
+    home = LOC.key_of_map(maps.by_dir("PalletTown_PlayersHouse_1F_Frlg", "de").id)
+    for iid, threshold, cost in mom_gifts():
+        add(iid, loc=home, map_id=None, kind="mom", price=cost, threshold=threshold)
+    return out
+
+
+@functools.lru_cache(maxsize=None)
+def mom_gifts():
+    """[(item id, savings needed or None, price or None)] of what Mom buys from the player's
+    savings (src/mom_savings.c): the fixed list in order, then the berries she buys at random.
+    Decorations are left out."""
+    import re
+    from gamedata import repo_path
+    src = open(repo_path("src", "mom_savings.c"), encoding="utf-8").read()
+    if not re.search(r"call PalletTown_PlayersHouse_1F_EventScript_MomSavingsMenu",
+                     open(repo_path("data", "maps", "PalletTown_PlayersHouse_1F_Frlg", "scripts.inc"),
+                          encoding="utf-8").read()):
+        raise ValueError("Mom's savings: the menu is no longer offered at home")
+    seq = re.search(r"sMomGifts_Sequential\[\]\s*=\s*\{(.*?)\n\};", src, re.S)
+    ber = re.search(r"sMomGifts_Berries\[\]\s*=\s*\{(.*?)\n\};", src, re.S)
+    if not seq or not ber:
+        raise ValueError("Mom's savings: gift lists not found")
+    out = []
+    for const, threshold, cost, deco in re.findall(r"\{\s*(\w+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(TRUE|FALSE)\s*\}",
+                                                   seq.group(1)):
+        it = IT.by_const(const, "de") if deco == "FALSE" else None
+        if it is not None:
+            out.append((it.id, int(threshold), int(cost)))
+    for const in re.findall(r"ITEM_\w+", ber.group(1)):
+        it = IT.by_const(const, "de")
+        if it is not None:
+            out.append((it.id, None, None))
     return out
 
 

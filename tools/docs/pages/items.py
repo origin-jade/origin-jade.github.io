@@ -18,7 +18,7 @@ from pages import world as WORLD
 INDEX = "data/items/index"
 TMS = "data/tms"
 BERRIES = "data/berries"
-KINDS = ("shop", "ball", "hidden", "gift", "bought", "berry")
+KINDS = ("shop", "ball", "hidden", "gift", "bought", "bp", "mom", "berry")
 FILTER_FROM = 15        # place tables with more rows get a filter bar
 
 STRINGS = {
@@ -27,9 +27,15 @@ STRINGS = {
                 "Seite mit allen Fundorten.",
         "placeholder": "Item oder Wirkung suchen …",
         "facet_pocket": "Beuteltasche",
-        "facet_how": "Herkunft",
+        "facet_how": "Fundort",
         "f_shop": "Laden",
-        "f_found": "Fundstück",
+        "f_ball": "Itemball",
+        "f_hidden": "Versteckt",
+        "f_bp": "Gewinnpunkte",
+        "f_mom": "Mamas Einkäufe",
+        "k_bp": "Tausch gegen Gewinnpunkte – {price}",
+        "k_mom": "Mama kauft es von deinem Ersparten, sobald du {saved} gespart hast (kostet {price})",
+        "k_mom_berry": "Mama kauft sie gelegentlich von deinem Ersparten",
         "f_gift": "Geschenk",
         "f_berry": "Beerenbaum",
         "f_held": "Wilde Pokémon",
@@ -96,9 +102,15 @@ STRINGS = {
                 "page listing every place to get it.",
         "placeholder": "Search item or effect …",
         "facet_pocket": "Bag pocket",
-        "facet_how": "Source",
+        "facet_how": "Where from",
         "f_shop": "Shop",
-        "f_found": "Found item",
+        "f_ball": "Item ball",
+        "f_hidden": "Hidden",
+        "f_bp": "Battle Points",
+        "f_mom": "Mom's purchases",
+        "k_bp": "Exchanged for Battle Points – {price}",
+        "k_mom": "Mom buys it from your savings once you have saved {saved} (costs {price})",
+        "k_mom_berry": "Mom buys them from your savings now and then",
         "f_gift": "Gift",
         "f_berry": "Berry tree",
         "f_held": "Wild Pokémon",
@@ -224,6 +236,12 @@ def _how(ctx, p):
         return t("k_gift")
     if p.kind == "bought":
         return t("k_bought", price=_price(ctx, p.price))
+    if p.kind == "bp":
+        return t("k_bp", price=_price(ctx, p.price))
+    if p.kind == "mom":
+        if p.threshold is None:
+            return t("k_mom_berry")
+        return t("k_mom", saved=ctx.money(p.threshold), price=ctx.money(p.price))
     if p.kind == "shop":
         if p.badges:
             return t("k_shop_badges_1" if p.badges == 1 else "k_shop_badges", price=_price(ctx, p.price), n=p.badges)
@@ -234,7 +252,7 @@ def _how(ctx, p):
 def _qty(ctx, p):
     if p.kind == "berry":
         return ctx.t("one_tree") if p.count == 1 else ctx.t("n_trees", n=ctx.num(p.count))
-    if p.kind == "shop":
+    if p.kind in ("shop", "bp", "mom"):
         return None
     return "×%s" % ctx.num(p.qty * p.count)
 
@@ -358,10 +376,16 @@ def _how_tags(site, it):
     tags = []
     if "shop" in kinds or "bought" in kinds:
         tags.append("shop")
-    if "ball" in kinds or "hidden" in kinds:
-        tags.append("found")
+    if "ball" in kinds:
+        tags.append("ball")
+    if "hidden" in kinds:
+        tags.append("hidden")
     if "gift" in kinds:
         tags.append("gift")
+    if "bp" in kinds:
+        tags.append("bp")
+    if "mom" in kinds:
+        tags.append("mom")
     if "berry" in kinds:
         tags.append("berry")
     if it.id in D.held():
@@ -411,9 +435,9 @@ def _render_index(ctx, site):
     pockets = [(c.lower(), n) for c, n in IT.pockets(ctx.lang)]
     bar = H.filter_bar(ctx, "items", placeholder=t("placeholder"), facets=[
         {"key": "pocket", "label": t("facet_pocket"), "options": pockets, "style": "select"},
-        {"key": "how", "label": t("facet_how"), "options": [
-            ("shop", t("f_shop")), ("found", t("f_found")), ("gift", t("f_gift")), ("berry", t("f_berry")),
-            ("held", t("f_held"))]}])
+        {"key": "how", "label": t("facet_how"), "style": "chips", "options": [
+            ("shop", t("f_shop")), ("ball", t("f_ball")), ("hidden", t("f_hidden")), ("gift", t("f_gift")),
+            ("bp", t("f_bp")), ("mom", t("f_mom")), ("berry", t("f_berry")), ("held", t("f_held"))]}])
     groups = H.letter_groups([(_title(ctx, it), x) for it, x in zip(site.listed, ents)],
                              lambda xs: H.ent_grid(xs, cls="ents-wide"), "items")
     ctx.end(bar + groups, lead=H.esc(t("lead", n=ctx.num(len(site.listed)))))
