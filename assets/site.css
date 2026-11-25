@@ -612,6 +612,17 @@ a.ent:hover { background: var(--jade-tint); box-shadow: none; }
 .rmap-box i { position: absolute; width: 3.3334%; height: 5%; border-radius: 25%; background: #ff3b30; box-shadow: 0 0 0 1px #fff inset; animation: rmap-blink 1.2s steps(2, jump-none) infinite; }
 .rmap figcaption { margin-top: .35rem; font-size: .875rem; font-weight: 650; color: var(--muted); }
 @keyframes rmap-blink { from { opacity: .9; } to { opacity: .15; } }
+/* filter bars: a visible label and tinted controls, so they are noticed above a long list */
+.filter::before { content: attr(aria-label); font-size: .8125rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; color: var(--jade-strong); }
+.filter { border-bottom: 2px solid var(--jade); }
+.filter-chips button, .filter-sel select { border-color: var(--jade); background: var(--jade-tint); color: var(--jade-strong); }
+.filter-chips button:hover { background: var(--jade); color: var(--surface); }
+.filter-chips button[aria-pressed="true"] { color: var(--surface); background: var(--jade); }
+.filter-text input { border-color: var(--jade); }
+/* a list filtered by something else than its first letter shows no letter bar */
+.letters:has(+ .is-filtered) { display: none; }
+.letters + .is-filtered > [data-group] > .sub > h3 { display: none; }
+.letters + .is-filtered > [data-group] > .sub { margin-top: 0; }
 .sectabs { margin: 0 0 1.25rem; }
 .sectabs button { height: 2.25rem; }
 .is-tabbed > .sec { margin-top: 0; }
