@@ -52,6 +52,51 @@ def places():
         for mid, srcs in d.shops:
             for s in srcs:
                 add(s.item, loc=loc.key, map_id=mid, kind="shop", price=s.price, badges=s.detail or None)
+    for mid, iid, cost in bp_shops():
+        key = LOC.key_of_map(mid)
+        if key:
+            add(iid, loc=key, map_id=mid, kind="bought", price=("bp", cost))
+    return out
+
+
+@functools.lru_cache(maxsize=None)
+def bp_shops():
+    """[(map id, item id, Battle Points)] of the clerks that trade items for Battle Points:
+    a script of an active map calls a CreateBP...Shop special (src/shop.c), whose list is in
+    src/data/battle_frontier/battle_frontier_exchange_corner.h. Decorations are left out."""
+    import json
+    import os
+    import re
+    from gamedata import maps, repo_path
+    lists = {}
+    src = open(repo_path("src", "data", "battle_frontier", "battle_frontier_exchange_corner.h"),
+               encoding="utf-8").read()
+    for name, body in re.findall(r"static const struct BPShopEntry (?:UNUSED )?(\w+)\[\]\s*=\s*\{(.*?)\n\};",
+                                 src, re.S):
+        lists[name] = [(c, int(n)) for c, n in re.findall(r"\{\s*(ITEM_\w+)\s*,\s*(\d+)\s*\}", body)
+                       if c != "ITEM_NONE"]
+    shop = open(repo_path("src", "shop.c"), encoding="utf-8").read()
+    specials = dict(re.findall(r"void (CreateBP\w+)\(void\)\s*\{\s*CreateBPShopCommon\(\w+,\s*(\w+)\);", shop))
+    if not lists or not specials:
+        raise ValueError("Battle Point shops: lists or specials not found")
+    out, seen = [], set()
+    for m in maps.all_maps(active_only=True).values():
+        path = repo_path("data", "maps", m.dir, "scripts.inc")
+        if not os.path.isfile(path):
+            continue
+        text = open(path, encoding="utf-8").read()
+        if "special CreateBP" not in text:
+            continue
+        used = json.dumps(m.data)
+        for label, body in re.findall(r"^(\w+)::\n(.*?)(?=^\w+::|\Z)", text, re.M | re.S):
+            if '"%s"' % label not in used:
+                continue                    # no person on the map runs this script
+            for sp in re.findall(r"special (CreateBP\w+)", body):
+                for const, cost in lists.get(specials.get(sp), ()):
+                    it = IT.by_const(const, "de")
+                    if it is not None and (m.id, it.id) not in seen:
+                        seen.add((m.id, it.id))
+                        out.append((m.id, it.id, cost))
     return out
 
 

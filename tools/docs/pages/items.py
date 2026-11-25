@@ -46,6 +46,7 @@ STRINGS = {
         "k_underfoot": "Verstecktes Item (direkt unter dir)",
         "k_gift": "Geschenk oder Ereignis",
         "k_bought": "Kauf bei einer Person – {price}",
+        "n_bp": "{n} GP",
         "k_shop": "Laden – {price}",
         "k_shop_badges": "Laden – {price} (ab {n} Johto-Orden)",
         "k_shop_badges_1": "Laden – {price} (ab 1 Johto-Orden)",
@@ -114,6 +115,7 @@ STRINGS = {
         "k_underfoot": "Hidden item (right under you)",
         "k_gift": "Gift or event",
         "k_bought": "Bought from a person – {price}",
+        "n_bp": "{n} BP",
         "k_shop": "Shop – {price}",
         "k_shop_badges": "Shop – {price} (from {n} Johto badges)",
         "k_shop_badges_1": "Shop – {price} (from 1 Johto badge)",
@@ -206,6 +208,8 @@ def _loc_title(ctx, key):
 def _price(ctx, price):
     if isinstance(price, tuple):
         cur, amount = price
+        if cur == "bp":
+            return ctx.t("n_bp", n=ctx.num(amount))
         return ctx.money(amount) if cur == "money" else ctx.t("n_coins", n=ctx.num(amount))
     return ctx.money(price)
 
